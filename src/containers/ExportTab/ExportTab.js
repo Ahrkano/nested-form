@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './ExportTab.css';
     
-const exportTab = (props) => {
-
-    return (
-        <div className="ExportTab">
-            <h1>Export Tab</h1>
-        </div>
-    );
+class ExportTab extends Component {
+    render() {
+        return (
+            <div className="ExportTab">
+                <h1>Export Tab</h1>
+            </div>
+        );
+    }
 }
 
-export default exportTab;
+const mapStateToProps = state => { return { data: state.dataStructure }; };
+
+export default connect(mapStateToProps, null)(ExportTab);

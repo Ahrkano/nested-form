@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './PreviewTab.css';
     
-const previewTab = (props) => {
+class PreviewTab extends Component {
 
-    return (
-        <div className="previewTab">
-            <h1>Preview Tab</h1>
-        </div>
-    );
+    render() {
+        return (
+            <div className="previewTab">
+                <h1>Preview Tab</h1>
+            </div>
+        );
+    }
 }
 
-export default previewTab;
+const mapStateToProps = state => { return { data: state.dataStructure }; };
+
+export default connect(mapStateToProps, null)(PreviewTab);
