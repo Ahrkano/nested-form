@@ -15,15 +15,28 @@ class CreateTab extends Component {
         this.tree.root = this.rootNode;
     }
 
-    addItemHandler() {
-        // add item to data structure then update state
-        console.log('[inside]: addItemHandler()');
+    addInputHandler() {
+        // add input
 
-        const passNewState = 'newState'
-        this.props.onStateUpdate(passNewState);
+    }
+
+    addSubInput(parentId, newInputId) {
+        // add sub-input
+    }
+
+    onInputChangeHandler(event, inputId) {
+        // on any change to input -> change dataStructure
+
+        // update state
+        this.props.onStateUpdate(this.tree);
     }
 
     render() {
+        // function -> inputs group render 
+        let inputsGroup = <p>to be processed...</p>;
+        // styling input box indentation depending on the data structure depth
+
+        /*
         this.tree.add('VP of Happiness', 'CEO', this.tree.traverseBF);
         this.tree.add('VP of Finance', 'CEO', this.tree.traverseBF);
         this.tree.add('VP of Sadness', 'CEO', this.tree.traverseBF);
@@ -32,14 +45,12 @@ class CreateTab extends Component {
         this.tree.add('Manager of Puppies', 'Director of Puppies', this.tree.traverseBF);
 
         this.tree.remove('Manager of Puppies', 'Director of Puppies', this.tree.traverseBF);
-
-        console.log(this.tree);
-        console.log(this.props.data);
+        */
 
         return (
             <div className="CreateTab">
-                <h1>Create Tab</h1>
-                <AddInputButton onButtonClick={this.addItemHandler.bind(this)} />
+                {inputsGroup}
+                <AddInputButton onButtonClick={this.addInputHandler.bind(this)} />
             </div>
         );
     }

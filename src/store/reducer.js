@@ -10,6 +10,8 @@ const reducer = (state = initialState, action) => {
     if (action.type === actionTypes.UPDATE_STATE) {
         console.log('state updating...')
         console.log(action.state);
+
+        return {dataStructure: action.state}
     }
 
     return state;
