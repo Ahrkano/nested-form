@@ -69,25 +69,37 @@ class CreateTab extends Component {
         if (this.props.data !== null) {
             this.tree.traverseDF.call(this.props.data, function(node) {  
                 if (node.id !== 'rootNode') {
-                    inputNodes.push([node.id, node.data.question, node.data.type, node.data.parentType, node.data.condition, node.data.conditionValue, node.data.anchorLevel, node.parent.id]);
+                    // inputNodes.push([node.id, node.data.question, node.data.type, node.data.parentType, node.data.condition, node.data.conditionValue, node.data.anchorLevel, node.parent.id]);
+
+                    inputNodes.push({
+                        id: node.id,
+                        question: node.data.question,
+                        type: node.data.type,
+                        parentType: node.data.parentType,
+                        condition: node.data.condition,
+                        conditionValue: node.data.conditionValue,
+                        anchorLevel: node.data.anchorLevel,
+                        parentId: node.parent.id
+                    });
+
                 }
             });
         }
 
         console.log(inputNodes);
 
-        const inputGroups = inputNodes.map(input => {
+        const inputGroups = inputNodes.map(inputData => {
             return (
                 <InputEditBox 
-                    key={input[0]}
-                    id={input[0]} 
-                    value={input[1]} 
-                    type={input[2]} 
-                    parentType={input[3]}
-                    condition={input[4]}
-                    conditionValue={input[5]} 
-                    level={input[6]} 
-                    parent={input[7]} 
+                    key={inputData.id}
+                    id={inputData.id} 
+                    value={inputData.question} 
+                    type={inputData.type} 
+                    parentType={inputData.parentType}
+                    condition={inputData.condition}
+                    conditionValue={inputData.conditionValue} 
+                    level={inputData.anchorLevel} 
+                    parent={inputData.parentId} 
                     onInputChange={this.onInputChangeHandler.bind(this)} 
                     onSubInputAddition={this.addSubInput.bind(this)} 
                 />
