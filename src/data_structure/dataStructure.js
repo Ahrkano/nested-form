@@ -1,24 +1,28 @@
+// [id, question, type, condition, anchorLevel, parent, children]
+
 export class Node {
     constructor(data) {
-        this.data = data;
+        this.id = data[0];
+        this.question = data[1];
+        this.type = data[2];
+        this.condition = data[3];
+        this.anchorLevel = data[4];
         this.parent = null;
         this.children = [];
     }
-
-    // add(data) {
-    //     this.children.push(new Node(data));
-    // }
-
-    // remove(data) {
-    //     this.children = this.children.filter(node => {
-    //         return node.data !== data;
-    //     })
-    // }
 }
 
 export class Tree {
     constructor() {
-        this.root = null;
+        this.root = {
+            id: 'rootNode',
+            question: 'noQuestion',
+            type: 'noType',
+            condition: 'noCondition',
+            anchorLevel: 0,
+            parent: 'noParent',
+            children: []
+        };
     }
 
     traverseBF(callback) {
@@ -51,7 +55,7 @@ export class Tree {
         let child = new Node(data),
             parent = null,
             callback = function(node) {
-                if (node.data === toData) {
+                if (node.id === toData) {
                     parent = node;
                 }
             };
@@ -72,14 +76,14 @@ export class Tree {
             index;
      
         let callback = function(node) {
-            if (node.data === fromData) { parent = node; }
+            if (node.data[0] === fromData) { parent = node; }
         };
 
         const findIndex = function(arr, data) {
             var index;
          
             for (var i = 0; i < arr.length; i++) {
-                if (arr[i].data === data) { index = i; }
+                if (arr[i].id === data) { index = i; }
             }
          
             return index;

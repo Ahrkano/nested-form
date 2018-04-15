@@ -1,62 +1,72 @@
 import React, { Component } from 'react';
+import uuidV4 from 'uuid/v4';
 import { Node, Tree } from '../../data_structure/dataStructure';
+// import { Question } from '../../data_structure/questionConstructor';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
 import './CreateTab.css';
 
 import AddInputButton from '../../components/Buttons/AddInputButton/AddInputButton';
+import InputEditBox from '../../components/InputEditBox/InputEditBox';
     
 class CreateTab extends Component {
     constructor() {
         super();
         this.tree = new Tree();
-        this.rootNode = new Node('CEO');
-        this.tree.root = this.rootNode;
+        this.childNodes = 0;
     }
 
     addInputHandler() {
-        // add input
+        this.tree.add([uuidV4(), '', 'yesNo', 'noCondition', 1], 'rootNode', this.tree.traverseBF);
 
-    }
-
-    addSubInput(parentId, newInputId) {
-        // add sub-input
-    }
-
-    onInputChangeHandler(event, inputId) {
-        // on any change to input -> change dataStructure
-
-        // update state
         this.props.onStateUpdate(this.tree);
     }
 
+    addSubInput(parentId, newInputId) {
+        // console.log(this.props.data.root.children[0].id);
+        const parentNode = this.props.data.root.children[0].id;
+  
+    }
+
+    addSubInputSecondChild(parentId, newInputId) {
+        // console.log(this.props.data.root.children[0].id);
+        const parentNode = this.props.data.root.children[1].id;
+  
+        this.tree.add([uuidV4(), 'second child question', 'yesNo', 'noCondition', 1], parentNode, this.tree.traverseBF);
+        this.props.onStateUpdate(this.tree);
+    }
+
+    onInputChangeHandler(event, questionId, inputId) {
+        // on any change to input -> change dataStructure
+
+        // update state
+    }
+
     render() {
-        // function -> inputs group render 
-        let inputsGroup = <p>to be processed...</p>;
-        // styling input box indentation depending on the data structure depth
+        let inputsGroup = [];
 
-        /*
-        this.tree.add('VP of Happiness', 'CEO', this.tree.traverseBF);
-        this.tree.add('VP of Finance', 'CEO', this.tree.traverseBF);
-        this.tree.add('VP of Sadness', 'CEO', this.tree.traverseBF);
+        if (this.props.data !== null) {
+            console.log(this.props.data.root);
+            this.tree.traverseDF.call(this.props.data, function(node) {  inputsGroup.push(node) });
+        }
 
-        this.tree.add('Director of Puppies', 'VP of Finance', this.tree.traverseBF);
-        this.tree.add('Manager of Puppies', 'Director of Puppies', this.tree.traverseBF);
-
-        this.tree.remove('Manager of Puppies', 'Director of Puppies', this.tree.traverseBF);
-        */
+        console.log(inputsGroup);
 
         return (
             <div className="CreateTab">
-                {inputsGroup}
-                <AddInputButton onButtonClick={this.addInputHandler.bind(this)} />
+                <AddInputButton onButtonClick={this.addInputHandler.bind(this)}>Add Input</AddInputButton>
             </div>
         );
     }
 };
 
-const mapStateToProps = state => { return { data: state.dataStructure }; };
+const mapStateToProps = state => { 
+    return { 
+        data: state.dataStructure,
+        childNodes: state.childNodes 
+    }; 
+};
 
 const mapDispatchToProps = dispatch => {
     return {

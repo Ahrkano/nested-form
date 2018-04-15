@@ -6,7 +6,7 @@ const addInputButton = (props) => {
 
     return (
         <button onClick={props.onButtonClick}>
-            Add Item
+            {props.children}
         </button>
     );
 }
