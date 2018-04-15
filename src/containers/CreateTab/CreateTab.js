@@ -27,10 +27,10 @@ class CreateTab extends Component {
             anchorLevel: 1
         }, 'rootNode', this.tree.traverseDF);
 
-        this.props.onStateUpdate(this.tree);
+        this.props.onStateUpdate(this.reduxStateArray());
     }
 
-    addSubInput(parentId, parentLevel, parentType) {
+    addSubInputHandler(parentId, parentLevel, parentType) {
         this.tree.add({
             id: `question_${uuidV4().slice(0, 8)}`,
             question: '',
@@ -41,7 +41,7 @@ class CreateTab extends Component {
             anchorLevel: parentLevel + 1
         }, parentId, this.tree.traverseDF);
 
-        this.props.onStateUpdate(this.tree);
+        this.props.onStateUpdate(this.reduxStateArray());
     }
 
     onInputChangeHandler(event, questionId, inputType) {
@@ -60,48 +60,52 @@ class CreateTab extends Component {
         });
 
         // update state
-        this.props.onStateUpdate(this.tree);
+        this.props.onStateUpdate(this.reduxStateArray());
+    }
+
+    reduxStateArray() {
+        const inputNodes = [];
+
+        this.tree.traverseDF(function(node) {  
+            if (node.id !== 'rootNode') {
+                inputNodes.push({
+                    id: node.id,
+                    question: node.data.question,
+                    type: node.data.type,
+                    parentType: node.data.parentType,
+                    condition: node.data.condition,
+                    conditionValue: node.data.conditionValue,
+                    anchorLevel: node.data.anchorLevel,
+                    parentId: node.parent.id
+                });
+            }
+        });
+
+        return inputNodes;
     }
 
     render() {
-        let inputNodes = [];
-
+        let inputGroups = null;
+        
         if (this.props.data !== null) {
-            this.tree.traverseDF.call(this.props.data, function(node) {  
-                if (node.id !== 'rootNode') {
-                    inputNodes.push({
-                        id: node.id,
-                        question: node.data.question,
-                        type: node.data.type,
-                        parentType: node.data.parentType,
-                        condition: node.data.condition,
-                        conditionValue: node.data.conditionValue,
-                        anchorLevel: node.data.anchorLevel,
-                        parentId: node.parent.id
-                    });
-                }
-            });
-        }
-
-        console.log(inputNodes);
-
-        const inputGroups = inputNodes.map(inputData => {
-            return (
-                <InputEditBox 
-                    key={inputData.id}
-                    id={inputData.id} 
-                    value={inputData.question} 
-                    type={inputData.type} 
-                    parentType={inputData.parentType}
-                    condition={inputData.condition}
-                    conditionValue={inputData.conditionValue} 
-                    level={inputData.anchorLevel} 
-                    parent={inputData.parentId} 
-                    onInputChange={this.onInputChangeHandler.bind(this)} 
-                    onSubInputAddition={this.addSubInput.bind(this)} 
-                />
-            );
-        });        
+            inputGroups = this.props.data.map(inputData => {
+                return (
+                    <InputEditBox 
+                        key={inputData.id}
+                        id={inputData.id} 
+                        value={inputData.question} 
+                        type={inputData.type} 
+                        parentType={inputData.parentType}
+                        condition={inputData.condition}
+                        conditionValue={inputData.conditionValue} 
+                        level={inputData.anchorLevel} 
+                        parent={inputData.parentId} 
+                        onInputChange={this.onInputChangeHandler.bind(this)} 
+                        onSubInputAddition={this.addSubInputHandler.bind(this)} 
+                    />
+                );
+            });  
+        }   
 
         return (
             <div className="CreateTab">

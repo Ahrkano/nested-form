@@ -18,12 +18,12 @@ export class Tree {
     constructor() {
         this.root = {
             id: 'rootNode',
-            question: 'noQuestion',
-            type: 'noType',
-            condition: 'noCondition',
-            conditionValue: 'noConditionValue',
-            anchorLevel: 0,
-            parent: 'noParent',
+            // question: 'noQuestion',
+            // type: 'noType',
+            // condition: 'noCondition',
+            // conditionValue: 'noConditionValue',
+            // anchorLevel: 0,
+            // parent: 'noParent',
             children: []
         };
     }
