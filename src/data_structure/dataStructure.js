@@ -1,14 +1,14 @@
-// [id, question, type, condition, anchorLevel, parent, children]
-
 export class Node {
     constructor(data) {
-        this.id = data[0];
-        this.question = data[1];
-        this.type = data[2];
-        this.parentType= data[3];
-        this.condition = data[4];
-        this.conditionValue = data[5];
-        this.anchorLevel = data[6];
+        this.id = data.id;
+        this.data = {
+            question: data.question,
+            type: data.type,
+            parentType: data.parentType,
+            condition: data.condition,
+            conditionValue: data.conditionValue,
+            anchorLevel: data.anchorLevel
+        }
         this.parent = null;
         this.children = [];
     }

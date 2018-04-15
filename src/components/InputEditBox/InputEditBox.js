@@ -92,10 +92,12 @@ const inputEditBox = (props) => {
         <div className="InputEditBox" style={{ marginLeft: marginLeft }}>
             <p>id: {props.id} | parent: {props.parent} | level: {props.level}</p>
 
-            <div className="InputEditBox__condition">
-                <label>Condition: </label>
-                {condition}
-            </div>
+            {props.condition !== 'noCondition' ?
+                <div className="InputEditBox__condition">
+                    <label>Condition: </label>
+                    {condition}
+                </div>
+                : null}
 
             {questionInput}
             {type}

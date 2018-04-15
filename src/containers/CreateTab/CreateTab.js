@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import uuidV4 from 'uuid/v4';
 import { Node, Tree } from '../../data_structure/dataStructure';
-// import { Question } from '../../data_structure/questionConstructor';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
@@ -18,31 +17,43 @@ class CreateTab extends Component {
     }
 
     addInputHandler() {
-        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', 'rootParent', 'noCondition', 'noConditionValue', 1], 'rootNode', this.tree.traverseBF);
+        this.tree.add({
+            id: `question_${uuidV4().slice(0, 8)}`,
+            question: '',
+            type: 'yesNo',
+            parentType: 'rootParent',
+            condition: 'noCondition',
+            conditionValue: 'noConditionValue',
+            anchorLevel: 1
+        }, 'rootNode', this.tree.traverseDF);
 
         this.props.onStateUpdate(this.tree);
     }
 
     addSubInput(parentId, parentLevel, parentType) {
-        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', parentType, '', '', parentLevel + 1], parentId, this.tree.traverseDF);
+        this.tree.add({
+            id: `question_${uuidV4().slice(0, 8)}`,
+            question: '',
+            type: 'yesNo',
+            parentType: parentType,
+            condition: '',
+            conditionValue: '',
+            anchorLevel: parentLevel + 1
+        }, parentId, this.tree.traverseDF);
+
         this.props.onStateUpdate(this.tree);
     }
 
     onInputChangeHandler(event, questionId, inputType) {
-        console.log(`
-            questionValue: ${event.target.value}
-            questionId: ${questionId}
-            inputType: ${inputType}
-        `);
         // on any change to input -> change dataStructure
         this.tree.traverseDF(function(node) {
             if(node.id === questionId) {
-                node[inputType] = event.target.value;
+                node.data[inputType] = event.target.value;
 
                 if (inputType === 'type') {
                     node.children.forEach(child =>{ 
-                        child.parentType = node.type;
-                        child.conditionValue = ''; 
+                        child.data.parentType = node.data.type;
+                        child.data.conditionValue = ''; 
                     });
                 }
             }
@@ -56,19 +67,15 @@ class CreateTab extends Component {
         let inputNodes = [];
 
         if (this.props.data !== null) {
-            // console.log(this.props.data.root);
             this.tree.traverseDF.call(this.props.data, function(node) {  
                 if (node.id !== 'rootNode') {
-
-                    inputNodes.push([node.id ,node.question, node.type, node.parentType, node.condition, node.conditionValue, node.anchorLevel, node.parent.id]);
+                    inputNodes.push([node.id, node.data.question, node.data.type, node.data.parentType, node.data.condition, node.data.conditionValue, node.data.anchorLevel, node.parent.id]);
                 }
             });
         }
 
-        // inputNodes.forEach(node => {
-        //     console.log(node);
-        // });
-        // console.log(inputNodes);
+        console.log(inputNodes);
+
         const inputGroups = inputNodes.map(input => {
             return (
                 <InputEditBox 
@@ -85,9 +92,7 @@ class CreateTab extends Component {
                     onSubInputAddition={this.addSubInput.bind(this)} 
                 />
             );
-        });
-        // console.log(inputGroups);
-        
+        });        
 
         return (
             <div className="CreateTab">
@@ -98,12 +103,7 @@ class CreateTab extends Component {
     }
 };
 
-const mapStateToProps = state => { 
-    return { 
-        data: state.dataStructure,
-        childNodes: state.childNodes 
-    }; 
-};
+const mapStateToProps = state => { return { data: state.dataStructure }; };
 
 const mapDispatchToProps = dispatch => {
     return {
