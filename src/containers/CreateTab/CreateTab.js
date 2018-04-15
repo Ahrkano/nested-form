@@ -69,8 +69,6 @@ class CreateTab extends Component {
         if (this.props.data !== null) {
             this.tree.traverseDF.call(this.props.data, function(node) {  
                 if (node.id !== 'rootNode') {
-                    // inputNodes.push([node.id, node.data.question, node.data.type, node.data.parentType, node.data.condition, node.data.conditionValue, node.data.anchorLevel, node.parent.id]);
-
                     inputNodes.push({
                         id: node.id,
                         question: node.data.question,
@@ -81,7 +79,6 @@ class CreateTab extends Component {
                         anchorLevel: node.data.anchorLevel,
                         parentId: node.parent.id
                     });
-
                 }
             });
         }
