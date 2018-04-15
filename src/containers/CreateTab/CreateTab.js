@@ -18,43 +18,68 @@ class CreateTab extends Component {
     }
 
     addInputHandler() {
-        this.tree.add([uuidV4(), '', 'yesNo', 'noCondition', 1], 'rootNode', this.tree.traverseBF);
+        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', 'noCondition', 1], 'rootNode', this.tree.traverseBF);
 
         this.props.onStateUpdate(this.tree);
     }
 
-    addSubInput(parentId, newInputId) {
-        // console.log(this.props.data.root.children[0].id);
-        const parentNode = this.props.data.root.children[0].id;
-  
-    }
-
-    addSubInputSecondChild(parentId, newInputId) {
-        // console.log(this.props.data.root.children[0].id);
-        const parentNode = this.props.data.root.children[1].id;
-  
-        this.tree.add([uuidV4(), 'second child question', 'yesNo', 'noCondition', 1], parentNode, this.tree.traverseBF);
+    addSubInput(parentId, parentLevel) {
+        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', '', parentLevel + 1], parentId, this.tree.traverseDF);
         this.props.onStateUpdate(this.tree);
     }
 
-    onInputChangeHandler(event, questionId, inputId) {
+    onInputChangeHandler(event, questionId, inputType) {
+        console.log(`
+            questionValue: ${event.target.value}
+            questionId: ${questionId}
+            inputType: ${inputType}
+        `);
         // on any change to input -> change dataStructure
+        this.tree.traverseDF(function(node) {
+            if(node.id === questionId) {
+                node[inputType] = event.target.value;
+            }
+        });
 
         // update state
+        this.props.onStateUpdate(this.tree);
     }
 
     render() {
-        let inputsGroup = [];
+        let inputNodes = [];
 
         if (this.props.data !== null) {
             console.log(this.props.data.root);
-            this.tree.traverseDF.call(this.props.data, function(node) {  inputsGroup.push(node) });
+            this.tree.traverseDF.call(this.props.data, function(node) {  
+                if (node.id !== 'rootNode') {
+                    // inputNodes[node.id] = [node.question, node.type, node.condition, node.anchorLevel, node.parent.id];
+                    inputNodes.push([node.id ,node.question, node.type, node.condition, node.anchorLevel, node.parent.id]);
+                }
+            });
         }
 
-        console.log(inputsGroup);
+        console.log(inputNodes);
+        const inputGroups = inputNodes.map(input => {
+            return (
+                <InputEditBox 
+                    key={input[0]}
+                    id={input[0]} 
+                    value={input[1]} 
+                    type={input[2]} 
+                    condition={input[3]} 
+                    level={input[4]} 
+                    parent={input[5]} 
+                    onInputChange={this.onInputChangeHandler.bind(this)} 
+                    onSubInputAddition={this.addSubInput.bind(this)} 
+                />
+            );
+        });
+        // console.log(inputGroups);
+        
 
         return (
             <div className="CreateTab">
+                {inputGroups}
                 <AddInputButton onButtonClick={this.addInputHandler.bind(this)}>Add Input</AddInputButton>
             </div>
         );
