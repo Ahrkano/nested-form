@@ -12,8 +12,24 @@ import InputEditBox from '../../components/InputEditBox/InputEditBox';
 class CreateTab extends Component {
     constructor() {
         super();
+        this.tree = null;
+    }
+
+    componentWillMount() {
         this.tree = new Tree();
-        this.childNodes = 0;
+        if (this.props.questionArray) {  
+            this.props.questionArray.forEach(questionItem => {
+                this.tree.add({
+                    id: questionItem.id,
+                    question: questionItem.question,
+                    type: questionItem.type,
+                    parentType: questionItem.parentType,
+                    condition: questionItem.condition,
+                    conditionValue: questionItem.conditionValue,
+                    anchorLevel: questionItem.anchorLevel
+                }, questionItem.parentId, this.tree.traverseDF);
+            });
+        }
     }
 
     addInputHandler() {
@@ -85,10 +101,11 @@ class CreateTab extends Component {
     }
 
     render() {
+        console.log(this.props.questionArray);
         let inputGroups = null;
         
-        if (this.props.data !== null) {
-            inputGroups = this.props.data.map(inputData => {
+        if (this.props.questionArray) {
+            inputGroups = this.props.questionArray.map(inputData => {
                 return (
                     <InputEditBox 
                         key={inputData.id}
@@ -116,11 +133,11 @@ class CreateTab extends Component {
     }
 };
 
-const mapStateToProps = state => { return { data: state.dataStructure }; };
+const mapStateToProps = state => { return { questionArray: state.questionsArray }; };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onStateUpdate: (newState) => dispatch({type: actionTypes.UPDATE_STATE, state: newState})
+        onStateUpdate: (newQuestionArray) => dispatch({type: actionTypes.UPDATE_ARRAY, questionArray: newQuestionArray})
     };
 }
 

@@ -13,6 +13,6 @@ class ExportTab extends Component {
     }
 }
 
-const mapStateToProps = state => { return { data: state.dataStructure }; };
+const mapStateToProps = state => { return { data: state.questionsArray }; };
 
 export default connect(mapStateToProps, null)(ExportTab);

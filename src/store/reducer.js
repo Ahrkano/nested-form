@@ -1,11 +1,11 @@
 import * as actionTypes from './actions';
 
-const initialState = { dataStructure: null }
+const initialState = {  questionsArray: null }
 
 
 const reducer = (state = initialState, action) => {
-    if (action.type === actionTypes.UPDATE_STATE) { return { dataStructure: [ ...action.state ] }}
-
+    if (action.type === actionTypes.UPDATE_ARRAY) { return {questionsArray: [ ...action.questionArray ] }}
+    
     return state;
 }
 

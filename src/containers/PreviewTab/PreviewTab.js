@@ -6,6 +6,7 @@ import './PreviewTab.css';
 class PreviewTab extends Component {
 
     render() {
+        console.log(this.props.questionArray);
         return (
             <div className="previewTab">
                 <h1>Preview Tab</h1>
@@ -14,6 +15,6 @@ class PreviewTab extends Component {
     }
 }
 
-const mapStateToProps = state => { return { data: state.dataStructure }; };
+const mapStateToProps = state => { return { questionArray: state.questionsArray }; };
 
 export default connect(mapStateToProps, null)(PreviewTab);
