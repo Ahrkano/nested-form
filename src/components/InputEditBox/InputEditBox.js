@@ -2,7 +2,7 @@ import React from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import './InputEditBox.css'
 
-import AddInputButton from '../Buttons/AddInputButton/AddInputButton';
+import InputButton from '../Buttons/InputButton/InputButton';
     
 const inputEditBox = (props) => {
     const marginLeft = 40 * props.level + 'px';
@@ -102,10 +102,14 @@ const inputEditBox = (props) => {
             {questionInput}
             {type}
             <div className="InputEditBox__button">
-                <AddInputButton 
+                <InputButton 
                     onButtonClick={() => props.onSubInputAddition(props.id, props.level, props.type)}>
                     Add Sub-Input
-                </AddInputButton>
+                </InputButton>
+                <InputButton
+                    onButtonClick={() => props.onInputDeletion(props.id, props.parent)}>
+                    Delete
+                </InputButton>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ import * as actionTypes from '../../store/actions';
 
 import './CreateTab.css';
 
-import AddInputButton from '../../components/Buttons/AddInputButton/AddInputButton';
+import InputButton from '../../components/Buttons/InputButton/InputButton';
 import InputEditBox from '../../components/InputEditBox/InputEditBox';
     
 class CreateTab extends Component {
@@ -60,6 +60,12 @@ class CreateTab extends Component {
         this.props.onStateUpdate(this.reduxStateArray());
     }
 
+    onInputDeleteHandler(childId, parentId) {
+        this.tree.remove(childId, parentId, this.tree.traverseDF);
+
+        this.props.onStateUpdate(this.reduxStateArray());
+    }
+
     onInputChangeHandler(event, questionId, inputType) {
         // on any change to input -> change dataStructure
         this.tree.traverseDF(function(node) {
@@ -101,7 +107,6 @@ class CreateTab extends Component {
     }
 
     render() {
-        console.log(this.props.questionArray);
         let inputGroups = null;
         
         if (this.props.questionArray) {
@@ -118,7 +123,8 @@ class CreateTab extends Component {
                         level={inputData.anchorLevel} 
                         parent={inputData.parentId} 
                         onInputChange={this.onInputChangeHandler.bind(this)} 
-                        onSubInputAddition={this.addSubInputHandler.bind(this)} 
+                        onSubInputAddition={this.addSubInputHandler.bind(this)}
+                        onInputDeletion={this.onInputDeleteHandler.bind(this)} 
                     />
                 );
             });  
@@ -127,7 +133,7 @@ class CreateTab extends Component {
         return (
             <div className="CreateTab">
                 {inputGroups}
-                <AddInputButton onButtonClick={this.addInputHandler.bind(this)}>Add Input</AddInputButton>
+                <InputButton onButtonClick={this.addInputHandler.bind(this)}>Add Input</InputButton>
             </div>
         );
     }

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './AddInputButton.css'
+import './InputButton.css'
     
-const addInputButton = (props) => {
+const inputButton = (props) => {
 
     return (
         <button onClick={props.onButtonClick}>
@@ -11,4 +11,4 @@ const addInputButton = (props) => {
     );
 }
 
-export default addInputButton;
+export default inputButton;

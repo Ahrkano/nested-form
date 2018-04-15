@@ -18,12 +18,6 @@ export class Tree {
     constructor() {
         this.root = {
             id: 'rootNode',
-            // question: 'noQuestion',
-            // type: 'noType',
-            // condition: 'noCondition',
-            // conditionValue: 'noConditionValue',
-            // anchorLevel: 0,
-            // parent: 'noParent',
             children: []
         };
     }
@@ -73,20 +67,20 @@ export class Tree {
         } 
     }
 
-    remove(data, fromData, traversal) {
+    remove(childId, parentId, traversal) {
         let parent = null,
             childToRemove = null,
             index;
      
         let callback = function(node) {
-            if (node.data[0] === fromData) { parent = node; }
+            if (node.id === parentId) { parent = node; }
         };
 
-        const findIndex = function(arr, data) {
+        const findIndex = function(arr, childId) {
             var index;
          
             for (var i = 0; i < arr.length; i++) {
-                if (arr[i].id === data) { index = i; }
+                if (arr[i].id === childId) { index = i; }
             }
          
             return index;
@@ -95,7 +89,7 @@ export class Tree {
         this.contains(callback, traversal);
      
         if (parent) {
-            index = findIndex(parent.children, data);
+            index = findIndex(parent.children, childId);
      
             if (index === undefined) {
                 throw new Error('Node to remove does not exist.');
