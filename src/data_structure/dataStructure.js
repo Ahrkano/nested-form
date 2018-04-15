@@ -5,8 +5,10 @@ export class Node {
         this.id = data[0];
         this.question = data[1];
         this.type = data[2];
-        this.condition = data[3];
-        this.anchorLevel = data[4];
+        this.parentType= data[3];
+        this.condition = data[4];
+        this.conditionValue = data[5];
+        this.anchorLevel = data[6];
         this.parent = null;
         this.children = [];
     }
@@ -19,6 +21,7 @@ export class Tree {
             question: 'noQuestion',
             type: 'noType',
             condition: 'noCondition',
+            conditionValue: 'noConditionValue',
             anchorLevel: 0,
             parent: 'noParent',
             children: []
@@ -51,11 +54,11 @@ export class Tree {
         traversal.call(this, callback);
     }
 
-    add(data, toData, traversal) {
+    add(data, toParentId, traversal) {
         let child = new Node(data),
             parent = null,
             callback = function(node) {
-                if (node.id === toData) {
+                if (node.id === toParentId) {
                     parent = node;
                 }
             };

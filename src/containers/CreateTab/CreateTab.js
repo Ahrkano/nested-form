@@ -18,13 +18,13 @@ class CreateTab extends Component {
     }
 
     addInputHandler() {
-        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', 'noCondition', 1], 'rootNode', this.tree.traverseBF);
+        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', 'rootParent', 'noCondition', 'noConditionValue', 1], 'rootNode', this.tree.traverseBF);
 
         this.props.onStateUpdate(this.tree);
     }
 
-    addSubInput(parentId, parentLevel) {
-        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', '', parentLevel + 1], parentId, this.tree.traverseDF);
+    addSubInput(parentId, parentLevel, parentType) {
+        this.tree.add([`question_${uuidV4().slice(0, 8)}`, '', 'yesNo', parentType, '', '', parentLevel + 1], parentId, this.tree.traverseDF);
         this.props.onStateUpdate(this.tree);
     }
 
@@ -38,6 +38,13 @@ class CreateTab extends Component {
         this.tree.traverseDF(function(node) {
             if(node.id === questionId) {
                 node[inputType] = event.target.value;
+
+                if (inputType === 'type') {
+                    node.children.forEach(child =>{ 
+                        child.parentType = node.type;
+                        child.conditionValue = ''; 
+                    });
+                }
             }
         });
 
@@ -49,16 +56,19 @@ class CreateTab extends Component {
         let inputNodes = [];
 
         if (this.props.data !== null) {
-            console.log(this.props.data.root);
+            // console.log(this.props.data.root);
             this.tree.traverseDF.call(this.props.data, function(node) {  
                 if (node.id !== 'rootNode') {
-                    // inputNodes[node.id] = [node.question, node.type, node.condition, node.anchorLevel, node.parent.id];
-                    inputNodes.push([node.id ,node.question, node.type, node.condition, node.anchorLevel, node.parent.id]);
+
+                    inputNodes.push([node.id ,node.question, node.type, node.parentType, node.condition, node.conditionValue, node.anchorLevel, node.parent.id]);
                 }
             });
         }
 
-        console.log(inputNodes);
+        // inputNodes.forEach(node => {
+        //     console.log(node);
+        // });
+        // console.log(inputNodes);
         const inputGroups = inputNodes.map(input => {
             return (
                 <InputEditBox 
@@ -66,9 +76,11 @@ class CreateTab extends Component {
                     id={input[0]} 
                     value={input[1]} 
                     type={input[2]} 
-                    condition={input[3]} 
-                    level={input[4]} 
-                    parent={input[5]} 
+                    parentType={input[3]}
+                    condition={input[4]}
+                    conditionValue={input[5]} 
+                    level={input[6]} 
+                    parent={input[7]} 
                     onInputChange={this.onInputChangeHandler.bind(this)} 
                     onSubInputAddition={this.addSubInput.bind(this)} 
                 />
