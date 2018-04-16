@@ -5,7 +5,7 @@ import './InputButton.css'
 const inputButton = (props) => {
 
     return (
-        <button onClick={props.onButtonClick}>
+        <button className={props.className} onClick={props.onButtonClick}>
             {props.children}
         </button>
     );

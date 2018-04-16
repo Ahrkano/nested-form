@@ -19,10 +19,6 @@ class PreviewTab extends Component {
         const formObject = formObjectFiller(this.props.questionArray);
         this.setState({ ...formObject });
         this.rootQuestionsOrder = rootQuestionsOrderArray(this.props.questionArray);
-
-        // hard coded values
-        // this.rootQuestionsOrder = rootQuestionsOrder;
-        // this.setState({ ...objectForm });
     }
 
     onInputChangeHandler(event, questionId) {

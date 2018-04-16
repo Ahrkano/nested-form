@@ -134,7 +134,7 @@ class CreateTab extends Component {
         return (
             <div className="CreateTab">
                 {inputGroups}
-                <InputButton onButtonClick={this.addInputHandler.bind(this)}>Add Input</InputButton>
+                <InputButton className="InputButton__add-input" onButtonClick={this.addInputHandler.bind(this)}>Add Input</InputButton>
             </div>
         );
     }

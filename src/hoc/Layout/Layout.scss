@@ -1,3 +1,11 @@
+@import 'shared/_variables.scss';
+
 .Layout {
-    width: 90%;
+    width: 98vw;
+    height: 100vh;
+    margin-left: 2vw;
+
+    &__main {
+        height: calc(100vh - $navbar-height)
+    }
 }

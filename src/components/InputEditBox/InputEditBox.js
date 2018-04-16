@@ -90,25 +90,28 @@ const inputEditBox = (props) => {
 
     return (
         <div className="InputEditBox" style={{ marginLeft: marginLeft }}>
-            <p>id: {props.id} | parent: {props.parent} | level: {props.level}</p>
+            <div className="InputEditBox__content">
+                <h5 className="InputEditBox__question-id">{props.id}</h5>
+                {props.condition !== 'noCondition' ?
+                    <div className="InputEditBox__condition">
+                        <label>Condition: </label>
+                        {condition}
+                    </div>
+                    : null}
 
-            {props.condition !== 'noCondition' ?
-                <div className="InputEditBox__condition">
-                    <label>Condition: </label>
-                    {condition}
-                </div>
-                : null}
-
-            {questionInput}
-            {type}
-            <div className="InputEditBox__button">
-                <InputButton 
-                    onButtonClick={() => props.onSubInputAddition(props.id, props.level, props.type)}>
-                    Add Sub-Input
-                </InputButton>
+                {questionInput}
+                {type}
+            </div>
+            <div className="InputEditBox__buttons">
                 <InputButton
+                    className="InputButton__delete"
                     onButtonClick={() => props.onInputDeletion(props.id, props.parent)}>
                     Delete
+                </InputButton>
+                <InputButton 
+                    className="InputButton__add-sub-input"
+                    onButtonClick={() => props.onSubInputAddition(props.id, props.level, props.type)}>
+                    Add Sub-Input
                 </InputButton>
             </div>
         </div>
