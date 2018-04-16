@@ -52,8 +52,8 @@ class CreateTab extends Component {
             question: '',
             type: 'yesNo',
             parentType: parentType,
-            condition: '',
-            conditionValue: '',
+            condition: 'equals',
+            conditionValue: parentType === 'yesNo' ? 'yes' : '',
             anchorLevel: parentLevel + 1
         }, parentId, this.tree.traverseDF);
 
@@ -110,6 +110,7 @@ class CreateTab extends Component {
         let inputGroups = null;
         
         if (this.props.questionArray) {
+            console.log(this.props.questionArray);
             inputGroups = this.props.questionArray.map(inputData => {
                 return (
                     <InputEditBox 
