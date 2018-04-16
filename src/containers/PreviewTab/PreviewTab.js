@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formObjectFiller, rootQuestionsOrderArray } from '../../helper_functions/formObjectFiller';
 import { formObjectRenderingArray } from '../../helper_functions/formObjectRenderingArray';
-import { objectForm, rootQuestionsOrder } from '../../shared/hardCodedObjectForm';
+import { objectForm, rootQuestionsOrder } from '../../helper_functions/hardCodedObjectForm';
 
+import InputBox from '../../components/InputBox/InputBox';
 
 import './PreviewTab.css';
     
@@ -15,75 +16,48 @@ class PreviewTab extends Component {
     }
 
     componentWillMount() {
-        // const formObject = formObjectFiller(this.props.questionArray);
-        // this.setState({ ...formObject });
-        // this.rootQuestionsOrder = rootQuestionsOrderArray(this.props.questionArray);
+        const formObject = formObjectFiller(this.props.questionArray);
+        this.setState({ ...formObject });
+        this.rootQuestionsOrder = rootQuestionsOrderArray(this.props.questionArray);
 
         // hard coded values
-        this.rootQuestionsOrder = rootQuestionsOrder;
-        this.setState({ ...objectForm });
+        // this.rootQuestionsOrder = rootQuestionsOrder;
+        // this.setState({ ...objectForm });
+    }
+
+    onInputChangeHandler(event, questionId) {
+        const newState = {
+            ...this.state,
+            [questionId]: {
+                ...this.state[questionId],
+                answer: event.target.value
+            }
+        }
+        this.setState({ ...newState });
     }
 
     render() {
+        console.log(this.state);
         let renderForm = null,
             questionsRenderArray = null;
 
         if (this.state && this.rootQuestionsOrder) {
             questionsRenderArray = formObjectRenderingArray(this.state, this.rootQuestionsOrder);
-            console.log(questionsRenderArray);
-        }
-
-
-        // start 
-        // const questionsRenderArray = [];
-        
-        /*
-        if (this.state && this.rootQuestionsOrder) {
-
-            const that = this;
-
-            const questionRecursiveCall = function(questionId) {
-                const parentId = that.state[questionId].parentId;
-                
-                if (that.state[questionId].parentId === 'rootNode') {
-                    questionsRenderArray.push(questionId);
-                }
-                
-                if(that.state[questionId].parentId !== 'rootNode') {
-                    const parent = that.state[parentId];
-                    const conditionalValue = that.state[parentId].conditionalQuestions[questionId].value; 
-                    
-                    if (parent.answer.toLowerCase() === conditionalValue.toLowerCase()) {
-                        questionsRenderArray.push(questionId);
-                    }
-                    
-                    // test logs
-                    console.table({
-                        parent: parentId,
-                        parentAnswer: parent.answer,
-                        conditionalQuestionId: questionId,
-                        conditionalAnswer: conditionalValue
-                    });
-                }
     
-                if (Object.keys(that.state[questionId].conditionalQuestions)[0]) {
-                    for(let key in that.state[questionId].conditionalQuestions) {
-                        questionRecursiveCall(key);
-                    }
-                }
-            }
-
-            setTimeout(() => console.log(this.state), 0);
-            setTimeout(() => console.log(questionsRenderArray), 0);
-
-            this.rootQuestionsOrder.map(rootQuestion => {
-                questionRecursiveCall(rootQuestion);
+            renderForm = questionsRenderArray.map(questionId => {
+                console.log(this.state[questionId].answer);
+                return (
+                    <InputBox key={questionId} 
+                        id={questionId}
+                        question={this.state[questionId].question}
+                        inputType={this.state[questionId].inputType}
+                        value={this.state[questionId].answer}
+                        level={this.state[questionId].level}
+                        onInputChange={this.onInputChangeHandler.bind(this)}
+                    />
+                );
             });
         }
-
-        //  end
-
-        */
 
         return (
             <div className="previewTab">

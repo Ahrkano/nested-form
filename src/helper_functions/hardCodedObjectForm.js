@@ -41,7 +41,7 @@ export const objectForm = {
         question: "Second question: input 'second'"
     },
     question_C0: {
-        answer: "Answer for C0",
+        answer: "4",
         conditionType: "root",
         conditionalQuestions: {
             question_C1: {type: "equals", value: "4"}
