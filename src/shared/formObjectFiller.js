@@ -14,12 +14,12 @@ export const formObjectFiller = function(questionArray) {
         });
 
         // populating rootQuestionsOrder Array
-        formObject.rootQuestionsOrder = [];
+        // formObject.rootQuestionsOrder = [];
 
         questionArray.forEach(questionItem => {
-            if(questionItem.parentId === 'rootNode') {
-                formObject.rootQuestionsOrder.push(questionItem.id);
-            }
+            // if(questionItem.parentId === 'rootNode') {
+            //     formObject.rootQuestionsOrder.push(questionItem.id);
+            // }
 
             if (questionItem.condition !== 'noCondition') {
                 formObject[questionItem.parentId].conditionalQuestions[questionItem.id] = {
@@ -30,5 +30,19 @@ export const formObjectFiller = function(questionArray) {
         });
 
         return formObject;
+    }
+}
+
+export const rootQuestionsOrderArray = function(questionArray) {
+    if (questionArray) {
+        const rootQuestionsOrder = [];
+
+        questionArray.forEach(questionItem => {
+            if(questionItem.parentId === 'rootNode') {
+                rootQuestionsOrder.push(questionItem.id);
+            }
+        });
+
+        return rootQuestionsOrder;
     }
 }

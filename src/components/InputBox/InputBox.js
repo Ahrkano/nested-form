@@ -6,6 +6,7 @@ const inputBox = (props) => {
 
     return (
         <div className="InputBox">
+            
         </div>
     );
 }
