@@ -9,7 +9,8 @@ export const objectForm = {
         question: "Third's question subinput"
     },
     question_A0: {
-        answer: "Answer for A0",
+        // answer: "Answer for A0",
+        answer: "Yes",
         conditionType: "root",
         conditionalQuestions: {
             question_A1: {type: "equals", value: "yes"}
