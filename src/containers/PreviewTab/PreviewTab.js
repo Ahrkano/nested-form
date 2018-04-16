@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { formObjectFiller } from '../../shared/formObjectFiller';
 
 import './PreviewTab.css';
     
@@ -10,47 +11,20 @@ class PreviewTab extends Component {
     }
 
     componentWillMount() {
-        if (this.props.questionArray) {
-            this.formObject = {}
-            // populating formObject with questionObjects
-            this.props.questionArray.forEach(questionItem => {
-                this.formObject[questionItem.id] = {
-                    conditionType: questionItem.condition === 'noCondition' ? 'root' : 'conditional',
-                    parentId: questionItem.parentId,
-                    question: questionItem.question,
-                    inputType: questionItem.type,
-                    answer: '',
-                    conditionalQuestions: {}
-                }; 
-            });
-
-            // populating rootQuestionsOrder Array
-            this.formObject.rootQuestionsOrder = [];
-
-            this.props.questionArray.forEach(questionItem => {
-                if(questionItem.parentId === 'rootNode') {
-                    this.formObject.rootQuestionsOrder.push(questionItem.id);
-                }
-
-                if (questionItem.condition !== 'noCondition') {
-                    this.formObject[questionItem.parentId].conditionalQuestions[questionItem.id] = {
-                        type: questionItem.condition,
-                        value: questionItem.conditionValue
-                    };
-                }
-            });
-        }
+        this.formObject = formObjectFiller(this.props.questionArray);
     }
 
     render() {
-        let formInputs = null;
-        console.log(this.formObject);
-        console.log(this.props.questionArray);
+        let renderForm = null;
+        
+        if (this.formObject) {
+            
+        }
 
         return (
             <div className="previewTab">
                 <form>
-                    {formInputs}
+                    {renderForm}
                 </form>
             </div>
         );
