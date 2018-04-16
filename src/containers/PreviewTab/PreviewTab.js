@@ -10,7 +10,7 @@ class PreviewTab extends Component {
     constructor() {
         super();
         this.rootQuestionsOrder = null;
-        this.state = {}
+        this.state = null;
     }
 
     componentWillMount() {
@@ -25,21 +25,37 @@ class PreviewTab extends Component {
 
     render() {
         let renderForm = null;
-        console.log(this.state);
-        console.log(this.rootQuestionsOrder);
-
-        // const questionRecursiveCall = function(questionId) {
-        //     console.log(this.state[questionId]);
-
-        // }
+        const questionsRenderArray = [];
         
-        // if (this.state) {
-            // console.log(this.state);
-        //     renderForm = this.rootQuestionsOrder.map(rootQuestion => {
-        //         // print rootQuestion
-        //         // check if question has condition & print if possible
-        //     });
-        // }
+        if (this.state && this.rootQuestionsOrder) {
+
+            const that = this;
+
+            const questionRecursiveCall = function(questionId) {
+                questionsRenderArray.push(questionId);
+                const parentId = that.state[questionId].parentId;
+                
+
+                console.log(`questionId: ${questionId}`);
+                if(that.state[questionId].parentId !== 'rootNode') {
+                    const parentAnswer = that.state[parentId].answer;
+                    console.log(`parent ${parentId} answer: ${parentAnswer}`);
+                }
+                console.log('------------------------');
+    
+                if (Object.keys(that.state[questionId].conditionalQuestions)[0]) {
+                    for(let key in that.state[questionId].conditionalQuestions) {
+                        questionRecursiveCall(key);
+                    }
+                }
+            }
+
+            console.log(this.state);
+
+            renderForm = this.rootQuestionsOrder.map(rootQuestion => {
+                questionRecursiveCall(rootQuestion);
+            });
+        }
 
         return (
             <div className="previewTab">

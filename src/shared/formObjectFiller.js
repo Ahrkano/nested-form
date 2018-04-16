@@ -9,17 +9,12 @@ export const formObjectFiller = function(questionArray) {
                 question: questionItem.question,
                 inputType: questionItem.type,
                 answer: '',
+                level: questionItem.anchorLevel,
                 conditionalQuestions: {}
             }; 
         });
 
-        // populating rootQuestionsOrder Array
-        // formObject.rootQuestionsOrder = [];
-
         questionArray.forEach(questionItem => {
-            // if(questionItem.parentId === 'rootNode') {
-            //     formObject.rootQuestionsOrder.push(questionItem.id);
-            // }
 
             if (questionItem.condition !== 'noCondition') {
                 formObject[questionItem.parentId].conditionalQuestions[questionItem.id] = {
