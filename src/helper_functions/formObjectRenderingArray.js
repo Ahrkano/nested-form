@@ -1,5 +1,11 @@
 export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
     const questionsRenderArray = [];
+    
+    const resetChildAnswers = function(questionId) {
+        Object.keys(state[questionId].conditionalQuestions).forEach(childQuestionId => {
+            state[childQuestionId].answer = '';
+        });
+    }
         
     if (state && rootQuestionsOrder) {
 
@@ -20,34 +26,29 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
 
                     if (parentAnswer === conditionalValue && parentAnswer !== '') { 
                         testPassed = true; 
-                    } else {
-                        // zero all possible children answers
-                    }
+                    } else { resetChildAnswers(parentId); }
+
                 } else if (conditionType === 'greater') {
                     parentAnswer !== '' ? parentAnswer = Number(parentAnswer) : parentAnswer;
                     conditionalValue = Number(conditionalValue);
 
                     if ((parentAnswer > conditionalValue) && parentAnswer !== '') { 
                         testPassed = true; 
-                    } else {
-                        // zero all possible children answers
-                    }
+                    } else { resetChildAnswers(parentId); }
+
                 } else if (conditionType === 'less') {
                     parentAnswer !== '' ? parentAnswer = Number(parentAnswer) : parentAnswer;
                     conditionalValue = Number(conditionalValue);
 
                     if ((parentAnswer < conditionalValue) && parentAnswer !== '') { 
                         testPassed = true; 
-                    } else {
-                        // zero all possible children answers
-                    }
+                    } else { resetChildAnswers(parentId); }
                 }
                 
 
                 // console.table({parent: parentId, parentAnswer: parent.answer, conditionalQuestionId: questionId, conditionalAnswer: conditionalValue});
             }
 
-            // push questionId if condition is fulfilled
             if(testPassed) { questionsRenderArray.push(questionId); }
 
             if (Object.keys(state[questionId].conditionalQuestions)[0]) {
