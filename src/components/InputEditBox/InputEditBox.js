@@ -9,6 +9,7 @@ const inputEditBox = (props) => {
 
     let condition = null;
     if(props.condition !== 'noCondition') {
+        console.log(props.parentType);
         if(props.parentType === 'text') {
             condition = (
                 <Aux>

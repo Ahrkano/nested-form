@@ -1,1 +1,1 @@
-export const UPDATE_ARRAY = 'UPDATE_ARRAY';
+export const UPDATE_STATE = 'UPDATE_STATE';

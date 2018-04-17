@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formObjectFiller, rootQuestionsOrderArray } from '../../helper_functions/formObjectFiller';
 import { formObjectRenderingArray } from '../../helper_functions/formObjectRenderingArray';
 import { objectForm, rootQuestionsOrder } from '../../helper_functions/hardCodedObjectForm';
 
@@ -16,9 +15,8 @@ class PreviewTab extends Component {
     }
 
     componentWillMount() {
-        const formObject = formObjectFiller(this.props.questionArray);
-        this.setState({ ...formObject });
-        this.rootQuestionsOrder = rootQuestionsOrderArray(this.props.questionArray);
+        this.setState({ ...this.props.formObject });
+        this.rootQuestionsOrder = this.props.rootQuestionsOrder;
     }
 
     onInputChangeHandler(event, questionId) {
@@ -33,7 +31,7 @@ class PreviewTab extends Component {
     }
 
     render() {
-        // console.log(this.state);
+        console.log(this.state);
         let renderForm = null,
             questionsRenderArray = null;
 
@@ -63,6 +61,12 @@ class PreviewTab extends Component {
     }
 }
 
-const mapStateToProps = state => { return { questionArray: state.questionsArray }; };
+const mapStateToProps = state => { 
+    return { 
+        allQuestionsOrder: state.allQuestionsOrder,
+        rootQuestionsOrder: state.rootQuestionsOrder,
+        formObject: state.formObject 
+    }; 
+};
 
 export default connect(mapStateToProps, null)(PreviewTab);

@@ -6,6 +6,8 @@ import * as actionTypes from '../../store/actions';
 
 import './CreateTab.css';
 
+import { reduxDataStructure } from '../../helper_functions/reduxDataStructure';
+
 import InputButton from '../../components/Buttons/InputButton/InputButton';
 import InputEditBox from '../../components/InputEditBox/InputEditBox';
     
@@ -17,19 +19,19 @@ class CreateTab extends Component {
 
     componentWillMount() {
         this.tree = new Tree();
-        if (this.props.questionArray) {  
-            this.props.questionArray.forEach(questionItem => {
-                this.tree.add({
-                    id: questionItem.id,
-                    question: questionItem.question,
-                    type: questionItem.type,
-                    parentType: questionItem.parentType,
-                    condition: questionItem.condition,
-                    conditionValue: questionItem.conditionValue,
-                    anchorLevel: questionItem.anchorLevel
-                }, questionItem.parentId, this.tree.traverseDF);
-            });
-        }
+        // if (this.props.questionArray) {  
+        //     this.props.questionArray.forEach(questionItem => {
+        //         this.tree.add({
+        //             id: questionItem.id,
+        //             question: questionItem.question,
+        //             type: questionItem.type,
+        //             parentType: questionItem.parentType,
+        //             condition: questionItem.condition,
+        //             conditionValue: questionItem.conditionValue,
+        //             anchorLevel: questionItem.anchorLevel
+        //         }, questionItem.parentId, this.tree.traverseDF);
+        //     });
+        // }
     }
 
     addInputHandler() {
@@ -43,7 +45,8 @@ class CreateTab extends Component {
             anchorLevel: 1
         }, 'rootNode', this.tree.traverseDF);
 
-        this.props.onStateUpdate(this.reduxStateArray());
+        const returnedValuesArray = reduxDataStructure(this.tree);
+        this.props.onStateUpdate(...returnedValuesArray);
     }
 
     addSubInputHandler(parentId, parentLevel, parentType) {
@@ -57,13 +60,15 @@ class CreateTab extends Component {
             anchorLevel: parentLevel + 1
         }, parentId, this.tree.traverseDF);
 
-        this.props.onStateUpdate(this.reduxStateArray());
+        const returnedValuesArray = reduxDataStructure(this.tree);
+        this.props.onStateUpdate(...returnedValuesArray);
     }
 
     onInputDeleteHandler(childId, parentId) {
         this.tree.remove(childId, parentId, this.tree.traverseDF);
 
-        this.props.onStateUpdate(this.reduxStateArray());
+        const returnedValuesArray = reduxDataStructure(this.tree);
+        this.props.onStateUpdate(...returnedValuesArray);
     }
 
     onInputChangeHandler(event, questionId, inputType) {
@@ -81,49 +86,27 @@ class CreateTab extends Component {
             }
         });
 
-        // update state
-        this.props.onStateUpdate(this.reduxStateArray());
+        const returnedValuesArray = reduxDataStructure(this.tree);
+        this.props.onStateUpdate(...returnedValuesArray);
     }
 
-    reduxStateArray() {
-        const inputNodes = [];
-
-        this.tree.traverseDF(function(node) {  
-            if (node.id !== 'rootNode') {
-                inputNodes.push({
-                    id: node.id,
-                    question: node.data.question,
-                    type: node.data.type,
-                    parentType: node.data.parentType,
-                    condition: node.data.condition,
-                    conditionValue: node.data.conditionValue,
-                    anchorLevel: node.data.anchorLevel,
-                    parentId: node.parent.id
-                });
-            }
-        });
-
-        return inputNodes;
-    }
 
     render() {
         let inputGroups = null;
-        console.log(this.tree);
-        
-        if (this.props.questionArray) {
-            // console.log(this.props.questionArray);
-            inputGroups = this.props.questionArray.map(inputData => {
+    
+        if (this.props.allQuestionsOrder) {
+            inputGroups = this.props.allQuestionsOrder.map(questionId => {
                 return (
                     <InputEditBox 
-                        key={inputData.id}
-                        id={inputData.id} 
-                        value={inputData.question} 
-                        type={inputData.type} 
-                        parentType={inputData.parentType}
-                        condition={inputData.condition}
-                        conditionValue={inputData.conditionValue} 
-                        level={inputData.anchorLevel} 
-                        parent={inputData.parentId} 
+                        key={questionId}
+                        id={questionId} 
+                        value={this.props.formObject[questionId].question} 
+                        type={this.props.formObject[questionId].inputType} 
+                        parentType={this.props.formObject[questionId].parentType}
+                        condition={this.props.formObject[questionId].condition}
+                        conditionValue={this.props.formObject[questionId].conditionValue} 
+                        level={this.props.formObject[questionId].level} 
+                        parent={this.props.formObject[questionId].parentId} 
                         onInputChange={this.onInputChangeHandler.bind(this)} 
                         onSubInputAddition={this.addSubInputHandler.bind(this)}
                         onInputDeletion={this.onInputDeleteHandler.bind(this)} 
@@ -141,11 +124,21 @@ class CreateTab extends Component {
     }
 };
 
-const mapStateToProps = state => { return { questionArray: state.questionsArray }; };
+const mapStateToProps = state => { 
+    return { 
+        allQuestionsOrder: state.allQuestionsOrder,
+        formObject: state.formObject 
+    }; 
+};
 
 const mapDispatchToProps = dispatch => {
     return {
-        onStateUpdate: (newQuestionArray) => dispatch({type: actionTypes.UPDATE_ARRAY, questionArray: newQuestionArray})
+        onStateUpdate: (allQuestionsOrder, rootQuestionsOrder, formObject) => dispatch({
+            type: actionTypes.UPDATE_STATE, 
+            allQuestionsOrder: allQuestionsOrder,
+            rootQuestionsOrder: rootQuestionsOrder,
+            formObject: formObject
+        })
     };
 }
 
