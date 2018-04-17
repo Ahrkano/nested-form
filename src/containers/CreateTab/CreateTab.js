@@ -45,8 +45,7 @@ class CreateTab extends Component {
             anchorLevel: 1
         }, 'rootNode', this.tree.traverseDF);
 
-        const returnedValuesArray = reduxDataStructure(this.tree);
-        this.props.onStateUpdate(...returnedValuesArray);
+        this.updateAndStoreState();
     }
 
     addSubInputHandler(parentId, parentLevel, parentType) {
@@ -60,15 +59,12 @@ class CreateTab extends Component {
             anchorLevel: parentLevel + 1
         }, parentId, this.tree.traverseDF);
 
-        const returnedValuesArray = reduxDataStructure(this.tree);
-        this.props.onStateUpdate(...returnedValuesArray);
+        this.updateAndStoreState();
     }
 
     onInputDeleteHandler(childId, parentId) {
         this.tree.remove(childId, parentId, this.tree.traverseDF);
-
-        const returnedValuesArray = reduxDataStructure(this.tree);
-        this.props.onStateUpdate(...returnedValuesArray);
+        this.updateAndStoreState();
     }
 
     onInputChangeHandler(event, questionId, inputType) {
@@ -86,8 +82,19 @@ class CreateTab extends Component {
             }
         });
 
-        const returnedValuesArray = reduxDataStructure(this.tree);
-        this.props.onStateUpdate(...returnedValuesArray);
+        this.updateAndStoreState();
+    }
+
+    updateAndStoreState() {
+        const [allQuestionsOrder, rootQuestionsOrder, formObject] = reduxDataStructure(this.tree);
+        const storedState = {  
+            allQuestionsOrder: allQuestionsOrder,
+            rootQuestionsOrder: rootQuestionsOrder,
+            formObject: formObject 
+        };
+        localStorage.setItem('nestedFormData##', JSON.stringify(storedState));
+
+        this.props.onStateUpdate(allQuestionsOrder, rootQuestionsOrder, formObject);
     }
 
 

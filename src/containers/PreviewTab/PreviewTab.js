@@ -30,7 +30,7 @@ class PreviewTab extends Component {
     }
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         let renderForm = null,
             questionsRenderArray = null;
 

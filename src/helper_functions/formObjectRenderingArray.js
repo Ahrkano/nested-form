@@ -2,6 +2,7 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
     const questionsRenderArray = [];
     
     const resetChildAnswers = function(questionId) {
+        console.log(`[inside resetChildAnswers()]: ${questionId}`);
         Object.keys(state[questionId].conditionalQuestions).forEach(childQuestionId => {
             state[childQuestionId].answer = '';
         });
@@ -26,7 +27,10 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
 
                     if (parentAnswer === conditionalValue && parentAnswer !== '') { 
                         testPassed = true; 
-                    } else { resetChildAnswers(parentId); }
+                    } else { 
+                        console.log(`line 31`);
+                        resetChildAnswers(parentId); 
+                    }
 
                 } else if (conditionType === 'greater') {
                     parentAnswer !== '' ? parentAnswer = Number(parentAnswer) : parentAnswer;
@@ -34,7 +38,10 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
 
                     if ((parentAnswer > conditionalValue) && parentAnswer !== '') { 
                         testPassed = true; 
-                    } else { resetChildAnswers(parentId); }
+                    } else { 
+                        console.log(`line 42`);
+                        resetChildAnswers(parentId); 
+                    }
 
                 } else if (conditionType === 'less') {
                     parentAnswer !== '' ? parentAnswer = Number(parentAnswer) : parentAnswer;
@@ -42,7 +49,10 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
 
                     if ((parentAnswer < conditionalValue) && parentAnswer !== '') { 
                         testPassed = true; 
-                    } else { resetChildAnswers(parentId); }
+                    } else {
+                        console.log(`line 53`); 
+                        resetChildAnswers(parentId); 
+                    }
                 }
                 
 

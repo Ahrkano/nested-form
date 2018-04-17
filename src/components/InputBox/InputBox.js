@@ -52,6 +52,7 @@ const inputBox = (props) => {
 
     return (
         <div style={{marginLeft: marginLeft}} className="InputBox">
+            <p>{props.id}</p>
             <h4 className="InputBox__question">{props.question}</h4>
             {input}
         </div>
