@@ -22,40 +22,7 @@ class PreviewTab extends Component {
     }
 
     onInputChangeHandler(event, questionId) {
-
-        let newState = null;
-
-        // if (event.target.value.trim() === '') {
-        //     // console.log(Object.keys(this.state[questionId].conditionalQuestions));
-
-        //     let childQuestionsStates = {};
-
-        //     Object.keys(this.state[questionId].conditionalQuestions).forEach(childQuestionId => {
-        //         childQuestionsStates[childQuestionId] = {
-        //             ...this.state[childQuestionId],
-        //             answer: ''
-        //         }
-        //     });
-
-        //     newState = {
-        //         ...this.state,
-        //         [questionId]: {
-        //             ...this.state[questionId],
-        //             answer: ''
-        //         },
-        //         ...childQuestionsStates
-        //     }
-        // } else {
-        //     newState = {
-        //         ...this.state,
-        //         [questionId]: {
-        //             ...this.state[questionId],
-        //             answer: event.target.value
-        //         }
-        //     }
-        // }
-
-        newState = {
+        const newState = {
             ...this.state,
             [questionId]: {
                 ...this.state[questionId],

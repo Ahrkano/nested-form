@@ -108,9 +108,10 @@ class CreateTab extends Component {
 
     render() {
         let inputGroups = null;
+        console.log(this.tree);
         
         if (this.props.questionArray) {
-            console.log(this.props.questionArray);
+            // console.log(this.props.questionArray);
             inputGroups = this.props.questionArray.map(inputData => {
                 return (
                     <InputEditBox 
