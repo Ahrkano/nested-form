@@ -6,10 +6,9 @@ import InputButton from '../Buttons/InputButton/InputButton';
     
 const inputEditBox = (props) => {
     const marginLeft = 40 * props.level + 'px';
-
     let condition = null;
+    
     if(props.condition !== 'noCondition') {
-        console.log(props.parentType);
         if(props.parentType === 'text') {
             condition = (
                 <Aux>

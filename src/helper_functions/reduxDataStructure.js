@@ -14,7 +14,6 @@ export const reduxDataStructure = function(treeStructure) {
         if (node.id !== 'rootNode' && node.parent.id === 'rootNode') { rootQuestionsOrder.push(node.id); }
 
         if (node.id !== 'rootNode') {
-            console.log(node);
             formObject[node.id] = {
                 conditionType: node.data.condition === 'noCondition' ? 'root' : 'conditional',
                 condition: node.data.condition,
@@ -30,8 +29,6 @@ export const reduxDataStructure = function(treeStructure) {
         } 
     }
 
-    // console.log('------------------------------------');
-    // console.log(allQuestionsOrder);
     allQuestionsOrder.forEach(questionId => {
         if (formObject[questionId].conditionType !== 'noCondition' && formObject[questionId].parentId !== 'rootNode' ) {
             const parentId = formObject[questionId].parentId;

@@ -19,19 +19,19 @@ class CreateTab extends Component {
 
     componentWillMount() {
         this.tree = new Tree();
-        // if (this.props.questionArray) {  
-        //     this.props.questionArray.forEach(questionItem => {
-        //         this.tree.add({
-        //             id: questionItem.id,
-        //             question: questionItem.question,
-        //             type: questionItem.type,
-        //             parentType: questionItem.parentType,
-        //             condition: questionItem.condition,
-        //             conditionValue: questionItem.conditionValue,
-        //             anchorLevel: questionItem.anchorLevel
-        //         }, questionItem.parentId, this.tree.traverseDF);
-        //     });
-        // }
+        if (this.props.allQuestionsOrder && this.props.formObject) {
+            this.props.allQuestionsOrder.forEach(questionId => {
+                this.tree.add({
+                    id: questionId,
+                    question: this.props.formObject[questionId].question,
+                    type: this.props.formObject[questionId].inputType,
+                    parentType: this.props.formObject[questionId].parentType,
+                    condition: this.props.formObject[questionId].condition,
+                    conditionValue: this.props.formObject[questionId].conditionValue,
+                    anchorLevel: this.props.formObject[questionId].level
+                }, this.props.formObject[questionId].parentId, this.tree.traverseDF);
+            });
+        }
     }
 
     addInputHandler() {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formObjectRenderingArray } from '../../helper_functions/formObjectRenderingArray';
-import { objectForm, rootQuestionsOrder } from '../../helper_functions/hardCodedObjectForm';
 
 import InputBox from '../../components/InputBox/InputBox';
 
@@ -39,7 +38,6 @@ class PreviewTab extends Component {
             questionsRenderArray = formObjectRenderingArray(this.state, this.rootQuestionsOrder);
     
             renderForm = questionsRenderArray.map(questionId => {
-                // console.log(this.state[questionId].answer);
                 return (
                     <InputBox key={questionId} 
                         id={questionId}
