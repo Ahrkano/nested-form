@@ -6,7 +6,7 @@ export const formObjectFiller = function(questionArray) {
             formObject[questionItem.id] = {
                 conditionType: questionItem.condition === 'noCondition' ? 'root' : 'conditional',
                 parentId: questionItem.parentId,
-                question: questionItem.question,
+                question: questionItem.question.charAt(0).toUpperCase() + questionItem.question.slice(1),
                 inputType: questionItem.type,
                 answer: '',
                 level: questionItem.anchorLevel,

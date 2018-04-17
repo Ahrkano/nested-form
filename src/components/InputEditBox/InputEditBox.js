@@ -54,7 +54,8 @@ const inputEditBox = (props) => {
                         <option value="greater">Greater than</option>
                         <option value="less">Less than</option>
                     </select>
-                    <input 
+                    <input
+                        className="InputEditBox__number-input" 
                         type="number"
                         id="questionInput" 
                         value={props.conditionValue} 

@@ -22,7 +22,40 @@ class PreviewTab extends Component {
     }
 
     onInputChangeHandler(event, questionId) {
-        const newState = {
+
+        let newState = null;
+
+        // if (event.target.value.trim() === '') {
+        //     // console.log(Object.keys(this.state[questionId].conditionalQuestions));
+
+        //     let childQuestionsStates = {};
+
+        //     Object.keys(this.state[questionId].conditionalQuestions).forEach(childQuestionId => {
+        //         childQuestionsStates[childQuestionId] = {
+        //             ...this.state[childQuestionId],
+        //             answer: ''
+        //         }
+        //     });
+
+        //     newState = {
+        //         ...this.state,
+        //         [questionId]: {
+        //             ...this.state[questionId],
+        //             answer: ''
+        //         },
+        //         ...childQuestionsStates
+        //     }
+        // } else {
+        //     newState = {
+        //         ...this.state,
+        //         [questionId]: {
+        //             ...this.state[questionId],
+        //             answer: event.target.value
+        //         }
+        //     }
+        // }
+
+        newState = {
             ...this.state,
             [questionId]: {
                 ...this.state[questionId],
@@ -33,7 +66,7 @@ class PreviewTab extends Component {
     }
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         let renderForm = null,
             questionsRenderArray = null;
 
@@ -41,7 +74,7 @@ class PreviewTab extends Component {
             questionsRenderArray = formObjectRenderingArray(this.state, this.rootQuestionsOrder);
     
             renderForm = questionsRenderArray.map(questionId => {
-                console.log(this.state[questionId].answer);
+                // console.log(this.state[questionId].answer);
                 return (
                     <InputBox key={questionId} 
                         id={questionId}
