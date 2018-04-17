@@ -2,6 +2,7 @@
 @import 'shared/_variables.scss';
 
 .Navigation {
+    position: fixed;
     background-color: $color-primary;
     height: $navbar-height;
     display: flex;

@@ -1,11 +1,19 @@
 @import 'shared/_variables.scss';
 
 .Layout {
-    width: 98vw;
+    width: 100vw;
     height: 100vh;
-    margin-left: 2vw;
+    padding-left: 2vw;
 
     &__main {
-        height: calc(100vh - $navbar-height)
+        padding-top: 60px;
+        height: calc(100vh - $navbar-height);
     }
+}
+
+.HeaderBackground {
+    position: fixed;
+    width: 100vw;
+    height: 60px;
+    background-color: #fff;
 }

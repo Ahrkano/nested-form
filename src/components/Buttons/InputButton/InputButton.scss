@@ -4,7 +4,7 @@
 .InputButton {
     &__add-input {
         cursor: pointer;
-        position: absolute;
+        position: fixed;
         left: $navbar-width;
         top: 0;
         transform: translateX(calc(10px + 2vw));
