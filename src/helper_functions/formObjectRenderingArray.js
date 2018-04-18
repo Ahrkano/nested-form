@@ -1,9 +1,10 @@
 export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
     const questionsRenderArray = [];
-
+    
     const checkIfConditionalQuestionsShouldRender = function() {
         const reversedQuestionsArray = [ ...questionsRenderArray ].reverse();
-    
+        let shouldCallRecursively = [];
+
         reversedQuestionsArray.forEach(id => {
             const parentId = state[id].parentId;
             if ( parentId !== 'rootNode' && reversedQuestionsArray.indexOf(parentId) < 0 ) { 
@@ -11,8 +12,20 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
                 
                 const questionIndex = questionsRenderArray.indexOf(id);
                 questionsRenderArray.splice(questionIndex, 1);
+                
+                shouldCallRecursively.push(false);
+            } else {
+                shouldCallRecursively.push(true);
             }
         });
+
+        // reduce shouldCallRecursively to one value
+        shouldCallRecursively = shouldCallRecursively.reduce((conjunction, boolean) => { 
+            return conjunction && boolean;
+        }, true);
+
+        // recursive call if there was at least one element to remove from array
+        if (!shouldCallRecursively) { checkIfConditionalQuestionsShouldRender(); }
     }
 
     const questionRecursiveCall = function(questionId) {
