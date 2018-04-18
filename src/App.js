@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
 import CreateTab from './containers/CreateTab/CreateTab';
 import PreviewTab from './containers/PreviewTab/PreviewTab';
 import ExportTab from './containers/ExportTab/ExportTab';
+import { connect } from 'react-redux';
 
 import './App.css';
 
 class App extends Component {
-    
+
     render() {
+        console.log(this.props.areSomeInputsEmpty);
         return (
             <div className="App">
                 <Layout>
@@ -26,5 +28,10 @@ class App extends Component {
     }
 }
 
+const mapStateToProps = state => { 
+    return { 
+        areSomeInputsEmpty: state.areSomeInputsEmpty
+    }; 
+};
 
-export default App;
+export default withRouter(connect(mapStateToProps, null)(App));

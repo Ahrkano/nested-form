@@ -10,6 +10,7 @@ import { reduxDataStructure } from '../../helper_functions/reduxDataStructure';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
 import InputEditBox from '../../components/InputEditBox/InputEditBox';
+import { setTimeout } from 'timers';
     
 class CreateTab extends Component {
     constructor() {
@@ -33,6 +34,10 @@ class CreateTab extends Component {
                 }, this.props.formObject[questionId].parentId, this.tree.traverseDF);
             });
         }
+    }
+
+    componentDidMount() {
+        this.areInputsFilled();
     }
 
     addInputHandler() {
@@ -83,6 +88,7 @@ class CreateTab extends Component {
             }
         });
 
+        this.areInputsFilled();
         this.updateAndStoreState();
     }
 
@@ -98,6 +104,21 @@ class CreateTab extends Component {
         this.props.onStateUpdate(allQuestionsOrder, rootQuestionsOrder, formObject);
     }
 
+    areInputsFilled() {
+        const inputs = document.querySelectorAll('input');
+        const emptyInputs = [];
+
+        inputs.forEach(input => {
+            if (input.value.trim() === '') { 
+                emptyInputs.push(input); 
+                input.style.boxShadow = '0 0 8px #ffcc00';
+            } else {
+                input.style.boxShadow = 'none';
+            }
+        });
+        const boolean = !(emptyInputs.length === 0);
+        this.props.onEmptyInputs(boolean);
+    }
 
     render() {
         let inputGroups = null;
@@ -146,6 +167,10 @@ const mapDispatchToProps = dispatch => {
             allQuestionsOrder: allQuestionsOrder,
             rootQuestionsOrder: rootQuestionsOrder,
             formObject: formObject
+        }),
+        onEmptyInputs: (emptyInputsBoolean) => dispatch({ 
+            type: actionTypes.SET_EMPTY_INPUTS_INFO, 
+            areSomeInputsEmpty: emptyInputsBoolean
         })
     };
 }

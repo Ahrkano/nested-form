@@ -19,9 +19,7 @@ class ExportTab extends Component {
     render() {
         return (
             <div className="ExportTab">
-                <textarea rows="30" cols="120">
-                    {this.JSONexport}
-                </textarea>
+                <textarea rows="30" cols="120" defaultValue={this.JSONexport} />
             </div>
         );
     }
