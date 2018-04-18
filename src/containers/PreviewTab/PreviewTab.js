@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formObjectRenderingArray } from '../../helper_functions/formObjectRenderingArray';
+import { formObjectRenderingArray, checkIfConditionalQuestionsShouldRender } from '../../helper_functions/formObjectRenderingArray';
 
 import InputBox from '../../components/InputBox/InputBox';
 
@@ -36,6 +36,7 @@ class PreviewTab extends Component {
 
         if (this.state && this.rootQuestionsOrder) {
             questionsRenderArray = formObjectRenderingArray(this.state, this.rootQuestionsOrder);
+            checkIfConditionalQuestionsShouldRender(this.state, questionsRenderArray);
     
             renderForm = questionsRenderArray.map(questionId => {
                 return (

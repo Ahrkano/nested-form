@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actionTypes from './store/actions';
 
 import Layout from './hoc/Layout/Layout';
 import CreateTab from './containers/CreateTab/CreateTab';

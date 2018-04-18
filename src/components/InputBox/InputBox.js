@@ -48,10 +48,14 @@ const inputBox = (props) => {
                     onChange={(event) => props.onInputChange(event, props.id)} />
             );
             break
+        default:
+            console.log('sth went wrong: InputBox.js:line_52');
+            break;
     }
 
     return (
         <div style={{marginLeft: marginLeft}} className="InputBox">
+            <p>{props.id}</p>
             <h4 className="InputBox__question">{props.question}</h4>
             {input}
         </div>

@@ -1,12 +1,5 @@
 export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
     const questionsRenderArray = [];
-    
-    const resetChildAnswers = function(questionId) {
-        console.log(`[inside resetChildAnswers()]: ${questionId}`);
-        Object.keys(state[questionId].conditionalQuestions).forEach(childQuestionId => {
-            state[childQuestionId].answer = '';
-        });
-    }
         
     if (state && rootQuestionsOrder) {
 
@@ -25,34 +18,19 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
                     parentAnswer = parentAnswer.toString().toLowerCase();
                     conditionalValue = conditionalValue.toString().toLowerCase();
 
-                    if (parentAnswer === conditionalValue && parentAnswer !== '') { 
-                        testPassed = true; 
-                    } else { 
-                        console.log(`line 31`);
-                        resetChildAnswers(parentId); 
-                    }
+                    if (parentAnswer === conditionalValue && parentAnswer !== '') { testPassed = true; }
 
                 } else if (conditionType === 'greater') {
-                    parentAnswer !== '' ? parentAnswer = Number(parentAnswer) : parentAnswer;
+                    if(parentAnswer !== '') { parentAnswer = Number(parentAnswer); }
                     conditionalValue = Number(conditionalValue);
 
-                    if ((parentAnswer > conditionalValue) && parentAnswer !== '') { 
-                        testPassed = true; 
-                    } else { 
-                        console.log(`line 42`);
-                        resetChildAnswers(parentId); 
-                    }
+                    if ((parentAnswer > conditionalValue) && parentAnswer !== '') { testPassed = true; }
 
                 } else if (conditionType === 'less') {
-                    parentAnswer !== '' ? parentAnswer = Number(parentAnswer) : parentAnswer;
+                    if(parentAnswer !== '') { parentAnswer = Number(parentAnswer); }
                     conditionalValue = Number(conditionalValue);
 
-                    if ((parentAnswer < conditionalValue) && parentAnswer !== '') { 
-                        testPassed = true; 
-                    } else {
-                        console.log(`line 53`); 
-                        resetChildAnswers(parentId); 
-                    }
+                    if ((parentAnswer < conditionalValue) && parentAnswer !== '') { testPassed = true; } 
                 }
                 
 
@@ -67,7 +45,18 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
         }
         
         rootQuestionsOrder.map(rootQuestion => { questionRecursiveCall(rootQuestion); });
-
+        
         return questionsRenderArray;
     }
+}
+
+export const checkIfConditionalQuestionsShouldRender = function(state, questionsRenderArray) {
+    const reversedQuestionsArray = [ ...questionsRenderArray ].reverse();
+
+    reversedQuestionsArray.forEach(id => {
+        const parentId = state[id].parentId;
+        if ( parentId !== 'rootNode' && reversedQuestionsArray.indexOf(parentId) < 0 ) { 
+            state[parentId].answer = ''; 
+        }
+    });
 }
