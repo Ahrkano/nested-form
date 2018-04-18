@@ -8,10 +8,15 @@ const layout = (props) => {
 
     return (
         <div className="Layout">
-            <div className="HeaderBackground"><Navigation /></div>
+            <div className="Layout__header-background"><Navigation /></div>
             <main className="Layout__main">
                 {props.children}
             </main>
+            <div className="Layout__footer">
+                <span>
+                    developed by <a target="_blank" href="https://wojteki.github.io/portfolio/">WojteKi</a>
+                </span>
+            </div>
         </div>
     );
 }

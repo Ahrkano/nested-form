@@ -5,9 +5,8 @@
     &__add-input {
         cursor: pointer;
         position: fixed;
-        left: $navbar-width;
-        top: 0;
-        transform: translateX(calc(10px + 2vw));
+        top: 11px;
+        left: 650px;
         height: $navbar-height;
         width: 150px;
         border: 0;

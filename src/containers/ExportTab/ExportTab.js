@@ -2,12 +2,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import './ExportTab.css';
-    
+
 class ExportTab extends Component {
+    constructor() {
+        super();
+        this.JSONexport = null;
+    }
+    componentWillMount() {
+        this.JSONexport = JSON.stringify({
+            formObject: this.props.formObject,
+            allQuestionsOrder: this.props.allQuestionsOrder,
+            rootQuestionsOrder: this.props.rootQuestionsOrder
+        }, null, 2);
+    }
+
     render() {
         return (
             <div className="ExportTab">
-                <h1>Export Tab</h1>
+                <textarea rows="30" cols="120">
+                    {this.JSONexport}
+                </textarea>
             </div>
         );
     }

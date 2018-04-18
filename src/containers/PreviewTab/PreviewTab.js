@@ -61,7 +61,6 @@ class PreviewTab extends Component {
 
 const mapStateToProps = state => { 
     return { 
-        allQuestionsOrder: state.allQuestionsOrder,
         rootQuestionsOrder: state.rootQuestionsOrder,
         formObject: state.formObject 
     }; 

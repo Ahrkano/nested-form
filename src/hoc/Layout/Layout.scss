@@ -1,19 +1,51 @@
 @import 'shared/_variables.scss';
+@import 'shared/_colors.scss';
 
 .Layout {
-    width: 100vw;
-    height: 100vh;
-    padding-left: 2vw;
+    position: relative;
+    min-width: 80vw;
+    padding: 0 20px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid hsl(0, 0%, 80%);
+    box-shadow: 2px 0 5px rgba(#000, .3), -2px 0 5px rgba(#000, .3);
+    overflow-y: auto;
+
+    &__header-background {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        min-width: 80vw;
+        height: 60px;
+        background-color: #fff;
+    }
 
     &__main {
         padding-top: 60px;
         height: calc(100vh - $navbar-height);
     }
-}
 
-.HeaderBackground {
-    position: fixed;
-    width: 100vw;
-    height: 60px;
-    background-color: #fff;
+    &__footer {
+        position: fixed;
+        left: 10vw;
+        bottom: 6px;
+        height: 20px;
+        min-width: 80vw;
+
+        background-color: #fff;
+
+        font-size: 12px;
+        text-align: right;
+        
+        & span { 
+            padding-right: 20px; 
+            color: $color-primary;
+        }
+
+        & a {
+            color: $color-primary;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
 }

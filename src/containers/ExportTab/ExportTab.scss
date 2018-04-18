@@ -1,0 +1,9 @@
+.ExportTab {
+    display: flex;
+    justify-content: center;
+
+    & textarea {
+        margin-top: 20px;
+        resize: none;
+    }
+}

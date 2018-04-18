@@ -19,6 +19,7 @@ class CreateTab extends Component {
 
     componentWillMount() {
         this.tree = new Tree();
+        
         if (this.props.allQuestionsOrder && this.props.formObject) {
             this.props.allQuestionsOrder.forEach(questionId => {
                 this.tree.add({
