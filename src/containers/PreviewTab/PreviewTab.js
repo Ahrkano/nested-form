@@ -36,7 +36,6 @@ class PreviewTab extends Component {
 
         if (this.state && this.rootQuestionsOrder) {
             questionsRenderArray = formObjectRenderingArray(this.state, this.rootQuestionsOrder);
-            checkIfConditionalQuestionsShouldRender(this.state, questionsRenderArray);
     
             renderForm = questionsRenderArray.map(questionId => {
                 return (
