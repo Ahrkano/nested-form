@@ -1,5 +1,19 @@
 export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
     const questionsRenderArray = [];
+
+    const checkIfConditionalQuestionsShouldRender = function() {
+        const reversedQuestionsArray = [ ...questionsRenderArray ].reverse();
+    
+        reversedQuestionsArray.forEach(id => {
+            const parentId = state[id].parentId;
+            if ( parentId !== 'rootNode' && reversedQuestionsArray.indexOf(parentId) < 0 ) { 
+                state[parentId].answer = '';
+                
+                const questionIndex = questionsRenderArray.indexOf(id);
+                questionsRenderArray.splice(questionIndex, 1);
+            }
+        });
+    }
         
     if (state && rootQuestionsOrder) {
 
@@ -18,19 +32,25 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
                     parentAnswer = parentAnswer.toString().toLowerCase();
                     conditionalValue = conditionalValue.toString().toLowerCase();
 
-                    if (parentAnswer === conditionalValue && parentAnswer !== '') { testPassed = true; }
+                    if (parentAnswer === conditionalValue && parentAnswer !== '') { 
+                        testPassed = true; 
+                    } else { checkIfConditionalQuestionsShouldRender(); }
 
                 } else if (conditionType === 'greater') {
                     if(parentAnswer !== '') { parentAnswer = Number(parentAnswer); }
                     conditionalValue = Number(conditionalValue);
 
-                    if ((parentAnswer > conditionalValue) && parentAnswer !== '') { testPassed = true; }
+                    if ((parentAnswer > conditionalValue) && parentAnswer !== '') { 
+                        testPassed = true; 
+                    } else { checkIfConditionalQuestionsShouldRender(); }
 
                 } else if (conditionType === 'less') {
                     if(parentAnswer !== '') { parentAnswer = Number(parentAnswer); }
                     conditionalValue = Number(conditionalValue);
 
-                    if ((parentAnswer < conditionalValue) && parentAnswer !== '') { testPassed = true; } 
+                    if ((parentAnswer < conditionalValue) && parentAnswer !== '') { 
+                        testPassed = true; 
+                    } else { checkIfConditionalQuestionsShouldRender(); } 
                 }
                 
 
@@ -48,15 +68,4 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
         
         return questionsRenderArray;
     }
-}
-
-export const checkIfConditionalQuestionsShouldRender = function(state, questionsRenderArray) {
-    const reversedQuestionsArray = [ ...questionsRenderArray ].reverse();
-
-    reversedQuestionsArray.forEach(id => {
-        const parentId = state[id].parentId;
-        if ( parentId !== 'rootNode' && reversedQuestionsArray.indexOf(parentId) < 0 ) { 
-            state[parentId].answer = ''; 
-        }
-    });
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formObjectRenderingArray, checkIfConditionalQuestionsShouldRender } from '../../helper_functions/formObjectRenderingArray';
+import { formObjectRenderingArray } from '../../helper_functions/formObjectRenderingArray';
 
 import InputBox from '../../components/InputBox/InputBox';
 
