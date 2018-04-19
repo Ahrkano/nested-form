@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
     if (action.type === actionTypes.SET_EMPTY_INPUTS_INFO) {
         return {
             ...state,
-            areSomeInputsEmpty: action.areSomeInputsEmpty
+            areInputsFilled: action.areInputsFilled
         }
     }
     

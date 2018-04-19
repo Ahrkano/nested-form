@@ -10,7 +10,6 @@ import { reduxDataStructure } from '../../helper_functions/reduxDataStructure';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
 import InputEditBox from '../../components/InputEditBox/InputEditBox';
-import { setTimeout } from 'timers';
     
 class CreateTab extends Component {
     constructor() {
@@ -116,7 +115,7 @@ class CreateTab extends Component {
                 input.style.boxShadow = 'none';
             }
         });
-        const boolean = !(emptyInputs.length === 0);
+        const boolean = emptyInputs.length === 0;
         this.props.onEmptyInputs(boolean);
     }
 
@@ -168,9 +167,9 @@ const mapDispatchToProps = dispatch => {
             rootQuestionsOrder: rootQuestionsOrder,
             formObject: formObject
         }),
-        onEmptyInputs: (emptyInputsBoolean) => dispatch({ 
+        onEmptyInputs: (inputsStateBoolean) => dispatch({ 
             type: actionTypes.SET_EMPTY_INPUTS_INFO, 
-            areSomeInputsEmpty: emptyInputsBoolean
+            areInputsFilled: inputsStateBoolean
         })
     };
 }
