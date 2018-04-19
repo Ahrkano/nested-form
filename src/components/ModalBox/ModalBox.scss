@@ -1,19 +1,46 @@
 @import 'shared/_colors.scss';
 
 .ModalBox {
+
+    &__backdrop {
+        position: fixed;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(#000, .4);
+
+        &--open { animation: openModal 0.4s ease-out forwards; }
+        &--close { animation: closeModal 0.4s ease-out forwards; }
+    }
+
     &__dialog {
-        position: absolute; 
+        position: relative; 
         width: 400px;
         height: 150px;
-        top: 50%; 
-        left: 50%;
-        transform: translate(-50%, -50%); 
+        // top: 50%; 
+        // left: 50%;
+        // transform: translate(-50%, -50%); 
         border: 1px solid #e5e5e5;
         outline: none;
         border-radius: 5px;
         background-color: white;
         box-shadow: 0 5px 15px rgba(0,0,0,.5); 
         padding: 20px;
+
+        &--open {
+            animation: openDialog 0.4s ease-out forwards;
+        }
+
+        &--close {
+            animation: closeDialog 0.4s ease-out forwards;
+        }
     }
 
     &__dialog-heading {
@@ -64,4 +91,41 @@
             background-color: $color-warning;
         }
     }
+}
+
+@keyframes openDialog {
+    0% { 
+        opacity: 0;
+        transform: translateY(-100%); 
+    }
+    70% { 
+        opacity: .8;
+        transform: translateY(10%); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes closeDialog {
+    0% { 
+        opacity: 1;
+        transform: translateY(0); 
+    }
+    100% { 
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+
+@keyframes openModal {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes closeModal {
+    0% { opacity: 1; }
+    100% { opacity: 0;}
 }

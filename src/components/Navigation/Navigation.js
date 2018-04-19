@@ -4,6 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import ModalBox from '../ModalBox/ModalBox';
 import { connect } from 'react-redux';
+import Transition from 'react-transition-group/Transition';
 
 import './Navigation.css';
     
@@ -66,11 +67,19 @@ class NavigationItems extends Component {
                         {links}
                     </ul>
                 </nav>
-                <ModalBox 
-                    showModal={this.state.showModal}  
-                    close={this.closeModal.bind(this)}
-                    heading={modalHeading}
-                    info={modalMessage} />
+                <Transition 
+                    in={this.state.showModal}
+                    timeout={500} 
+                    mountOnEnter
+                    unmountOnExit >
+                    {state => (
+                        <ModalBox 
+                        state={state}   
+                        close={this.closeModal.bind(this)}
+                        heading={modalHeading}
+                        info={modalMessage} />
+                    )}
+                </Transition>
             </Aux>
         );
     }

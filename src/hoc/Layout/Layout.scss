@@ -13,6 +13,7 @@
 
     &__header-background {
         position: fixed;
+        z-index: 100;
         display: flex;
         align-items: center;
         min-width: 80vw;
@@ -28,6 +29,7 @@
 
     &__footer {
         position: fixed;
+        z-index: 50;
         left: 10vw;
         bottom: 6px;
         height: 20px;
@@ -44,9 +46,16 @@
         }
 
         & a {
+            display: inline-block;
+            padding-left: 5px;
             color: $color-primary;
             text-decoration: none;
             font-weight: bold;
+            transition: all .3s;
+
+            &:hover {
+                transform: rotate(-3deg) scale(1.2);
+            }
         }
     }
 }

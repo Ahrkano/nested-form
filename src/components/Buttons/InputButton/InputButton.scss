@@ -4,9 +4,7 @@
 .InputButton {
     &__add-input {
         cursor: pointer;
-        position: fixed;
-        top: 11px;
-        left: 650px;
+        margin-top: 10px;
         height: $navbar-height;
         width: 150px;
         border: 0;

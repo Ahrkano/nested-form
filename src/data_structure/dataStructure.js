@@ -49,8 +49,8 @@ export class Tree {
     }
 
     add(data, toParentId, traversal) {
-        let child = new Node(data),
-            parent = null,
+        const child = new Node(data);
+        let parent = null,
             callback = function(node) {
                 if (node.id === toParentId) {
                     parent = node;
