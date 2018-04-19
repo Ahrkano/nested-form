@@ -117,7 +117,7 @@ class CreateTab extends Component {
                 input.style.boxShadow = 'none';
             }
         });
-        const boolean = emptyInputs.length === 0;
+        const boolean = (emptyInputs.length === 0) && (inputs.length > 0);
         const numberOfEmptyInputs = emptyInputs.length;
         this.props.onEmptyInputs(boolean, numberOfEmptyInputs);
     }

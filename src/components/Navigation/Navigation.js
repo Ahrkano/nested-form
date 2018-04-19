@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import './Navigation.css';
     
 class NavigationItems extends Component {
-    
+
     state = {
         showModal: false
     }
@@ -45,11 +45,16 @@ class NavigationItems extends Component {
 
             if (this.props.emptyInputsLeft > 1) {
                 modalHeading = `There are ${this.props.emptyInputsLeft} inputs left empty`;
-            } else {
+                modalMessage = 'Please fill in all inputs before continuing';
+            } else if (this.props.emptyInputsLeft === 1) {
                 modalHeading = `There is ${this.props.emptyInputsLeft} input left empty`;
+                modalMessage = 'Please fill in all inputs before continuing';
+            } else {
+                modalHeading = `You don't have any inputs yet`;
+                modalMessage = 'Please create and fill in all inputs before continuing';
             }
             
-            modalMessage = 'Please fill all inputs before continuing';
+            
         }
 
 
