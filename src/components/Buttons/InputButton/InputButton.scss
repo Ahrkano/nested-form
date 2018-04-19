@@ -1,11 +1,9 @@
-@import 'shared/_variables.scss';
 @import 'shared/_colors.scss';
 
 .InputButton {
     &__add-input {
         cursor: pointer;
-        margin-top: 10px;
-        height: $navbar-height;
+        height: 40px;
         width: 150px;
         border: 0;
         border-radius: 5px;

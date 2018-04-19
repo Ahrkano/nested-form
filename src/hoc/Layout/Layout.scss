@@ -18,12 +18,11 @@
         align-items: center;
         min-width: 80vw;
         height: 60px;
-        background-color: #fff;
+        background-color: rgba(#fff, .85);
     }
 
     &__main {
         padding-top: 60px;
-        padding-bottom: 20px;
         height: calc(100vh - $navbar-height);
     }
 

@@ -1,3 +1,12 @@
+@import 'shared/_colors.scss';
 .CreateTab {
-
+ &__button-wrapper {
+     position: sticky;
+     bottom: 0;
+     left: 0;
+     margin-top: 10px;
+     padding: 10px 40px;
+     transform: translateX(-20px);
+     background-color: rgba(#fff, .85);
+ }
 }

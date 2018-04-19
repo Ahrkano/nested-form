@@ -12,12 +12,6 @@ const layout = (props) => {
             <main className="Layout__main">
                 {props.children}
             </main>
-            <div className="Layout__footer">
-                <span>
-                    developed by 
-                    <a target="_blank" rel="noopener noreferrer" href="https://wojteki.github.io/portfolio/">WojteKi</a>
-                </span>
-            </div>
         </div>
     );
 }
