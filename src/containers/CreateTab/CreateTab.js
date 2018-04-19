@@ -72,6 +72,7 @@ class CreateTab extends Component {
     onInputDeleteHandler(childId, parentId) {
         this.tree.remove(childId, parentId, this.tree.traverseDF);
         this.updateAndStoreState();
+        setTimeout(this.areInputsFilled.bind(this), 0);
     }
 
     onInputChangeHandler(event, questionId, inputType) {

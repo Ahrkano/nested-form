@@ -22,17 +22,6 @@ const modalBox = (props) => {
         opacity: 0.5
     };
 
-    const dialogStyle = { 
-        position: 'absolute', 
-        width: 400, top: '50%', 
-        left: '50%', 
-        transform: 'translate(-50%, -50%)', 
-        border: '1px solid #e5e5e5', 
-        backgroundColor: 'white', 
-        boxShadow: '0 5px 15px rgba(0,0,0,.5)', 
-        padding: 20 
-    }
-
     return (
         <Modal
             aria-labelledby='modal-label'
@@ -41,9 +30,10 @@ const modalBox = (props) => {
             show={props.showModal}
             onHide={props.close}
         >
-            <div style={dialogStyle} >
-                <h4 id='modal-label'>{props.heading}</h4>
-                <p>{props.info}</p>
+            <div className="ModalBox__dialog" >
+                <h4 id='modal-label' className="ModalBox__dialog-heading">{props.heading}</h4>
+                <p className="ModalBox__dialog-content">{props.info}</p>
+                <button className="ModalBox__button" onClick={props.close}>Close Modal</button>
             </div>
         </Modal>
     );
