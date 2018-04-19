@@ -35,6 +35,10 @@ class CreateTab extends Component {
         }
     }
 
+    componentDidMount() {
+        this.areInputsFilled();
+    }
+
     addInputHandler() {
         this.tree.add({
             id: `question_${uuidV4().slice(0, 8)}`,
@@ -47,6 +51,7 @@ class CreateTab extends Component {
         }, 'rootNode', this.tree.traverseDF);
 
         this.updateAndStoreState();
+        setTimeout(this.areInputsFilled.bind(this), 0);
     }
 
     addSubInputHandler(parentId, parentLevel, parentType) {
@@ -61,6 +66,7 @@ class CreateTab extends Component {
         }, parentId, this.tree.traverseDF);
 
         this.updateAndStoreState();
+        setTimeout(this.areInputsFilled.bind(this), 0);
     }
 
     onInputDeleteHandler(childId, parentId) {
@@ -83,6 +89,7 @@ class CreateTab extends Component {
             }
         });
 
+        this.areInputsFilled();
         this.updateAndStoreState();
     }
 
@@ -98,6 +105,22 @@ class CreateTab extends Component {
         this.props.onStateUpdate(allQuestionsOrder, rootQuestionsOrder, formObject);
     }
 
+    areInputsFilled() {
+        const inputs = document.querySelectorAll('input');
+        const emptyInputs = [];
+
+        inputs.forEach(input => {
+            if (input.value.trim() === '') { 
+                emptyInputs.push(input); 
+                input.style.boxShadow = '0 0 8px #ffcc00';
+            } else {
+                input.style.boxShadow = 'none';
+            }
+        });
+        const boolean = emptyInputs.length === 0;
+        const numberOfEmptyInputs = emptyInputs.length;
+        this.props.onEmptyInputs(boolean, numberOfEmptyInputs);
+    }
 
     render() {
         let inputGroups = null;
@@ -146,6 +169,11 @@ const mapDispatchToProps = dispatch => {
             allQuestionsOrder: allQuestionsOrder,
             rootQuestionsOrder: rootQuestionsOrder,
             formObject: formObject
+        }),
+        onEmptyInputs: (inputsStateBoolean, numberOfEmptyInputs) => dispatch({ 
+            type: actionTypes.SET_EMPTY_INPUTS_INFO, 
+            areInputsFilled: inputsStateBoolean,
+            emptyInputs: numberOfEmptyInputs
         })
     };
 }

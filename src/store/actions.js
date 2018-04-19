@@ -1,1 +1,2 @@
 export const UPDATE_STATE = 'UPDATE_STATE';
+export const SET_EMPTY_INPUTS_INFO = 'SET_EMPTY_INPUTS_INFO';
