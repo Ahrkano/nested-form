@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom'; 
 
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-// import Modal from '../../../node_modules/react-overlays/lib/Modal';
 import ModalBox from '../ModalBox/ModalBox';
 import { connect } from 'react-redux';
 
@@ -25,7 +24,9 @@ class NavigationItems extends Component {
 
   render() {
 
-    let links = null;
+    let links = null,
+        modalHeading = null,
+        modalMessage = null;
 
     if(this.props.areInputsFilled) {
       links = (
@@ -41,6 +42,13 @@ class NavigationItems extends Component {
           <li><NavLink to="/Export" onClick={this.openModal.bind(this)}>Export</NavLink></li>
         </Aux>
       );
+      if (this.props.emptyInputsLeft > 1) {
+        modalHeading = `There are ${this.props.emptyInputsLeft} inputs left empty`;
+      } else {
+        modalHeading = `There is ${this.props.emptyInputsLeft} input left empty`;
+      }
+      
+      modalMessage = 'Please fill all inputs before continuing';
     }
 
 
@@ -55,8 +63,8 @@ class NavigationItems extends Component {
         <ModalBox 
           showModal={this.state.showModal}  
           close={this.closeModal.bind(this)}
-          heading="You have some inputs to fill"
-          info="bla bla bla" />
+          heading={modalHeading}
+          info={modalMessage} />
       </Aux>
     );
   }
@@ -64,7 +72,8 @@ class NavigationItems extends Component {
 
 const mapStateToProps = state => { 
   return { 
-      areInputsFilled: state.areInputsFilled
+      areInputsFilled: state.areInputsFilled,
+      emptyInputsLeft: state.emptyInputs
   }; 
 };
 

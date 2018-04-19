@@ -118,7 +118,8 @@ class CreateTab extends Component {
             }
         });
         const boolean = emptyInputs.length === 0;
-        this.props.onEmptyInputs(boolean);
+        const numberOfEmptyInputs = emptyInputs.length;
+        this.props.onEmptyInputs(boolean, numberOfEmptyInputs);
     }
 
     render() {
@@ -169,9 +170,10 @@ const mapDispatchToProps = dispatch => {
             rootQuestionsOrder: rootQuestionsOrder,
             formObject: formObject
         }),
-        onEmptyInputs: (inputsStateBoolean) => dispatch({ 
+        onEmptyInputs: (inputsStateBoolean, numberOfEmptyInputs) => dispatch({ 
             type: actionTypes.SET_EMPTY_INPUTS_INFO, 
-            areInputsFilled: inputsStateBoolean
+            areInputsFilled: inputsStateBoolean,
+            emptyInputs: numberOfEmptyInputs
         })
     };
 }
