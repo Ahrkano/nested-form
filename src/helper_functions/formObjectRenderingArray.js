@@ -66,7 +66,7 @@ export const formObjectRenderingArray = function(state, rootQuestionsOrder) {
         }
     }
     
-    rootQuestionsOrder.map(rootQuestion => { questionRecursiveCall(rootQuestion); });
+    rootQuestionsOrder.forEach(rootQuestion => { questionRecursiveCall(rootQuestion); });
     
     checkIfConditionalQuestionsShouldRender();
 
