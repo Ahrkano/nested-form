@@ -145,7 +145,7 @@ class CreateTab extends Component {
                     />
                 );
             });  
-        }   
+        }
 
         return (
             <div className="CreateTab">
