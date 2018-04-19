@@ -51,6 +51,7 @@ class CreateTab extends Component {
         }, 'rootNode', this.tree.traverseDF);
 
         this.updateAndStoreState();
+        setTimeout(this.areInputsFilled.bind(this), 0);
     }
 
     addSubInputHandler(parentId, parentLevel, parentType) {
@@ -65,6 +66,7 @@ class CreateTab extends Component {
         }, parentId, this.tree.traverseDF);
 
         this.updateAndStoreState();
+        setTimeout(this.areInputsFilled.bind(this), 0);
     }
 
     onInputDeleteHandler(childId, parentId) {
