@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import FlipMove from 'react-flip-move';
 import { formObjectRenderingArray } from '../../helper_functions/formObjectRenderingArray';
 
 import InputBox from '../../components/InputBox/InputBox';
@@ -51,9 +52,39 @@ class PreviewTab extends Component {
             });
         }
 
+        const customEnterAnimation = {
+            from: { 
+                opacity: 0,
+                transform: 'translateX(-100%)' 
+            },
+            to: { 
+                opacity: 1,
+                transform: 'translateX(0)' 
+            }
+        };
+
+        const customLeaveAnimation = {
+            from: { 
+                opacity: 1,
+                transform: 'translateX(0)' 
+            },
+            to: { 
+                opacity: 0,
+                transform: 'translateX(100%)' 
+            }
+        };
+
         return (
             <div className="previewTab">
-                <form>{renderForm}</form>
+                <form>
+                <FlipMove 
+                    duration={350} 
+                    easing="ease-out" 
+                    enterAnimation={customEnterAnimation}
+                    leaveAnimation={customLeaveAnimation}>
+                    {renderForm}
+                    </FlipMove>
+                </form>
             </div>
         );
     }

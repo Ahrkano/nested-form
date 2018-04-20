@@ -1,12 +1,17 @@
 @import 'shared/_colors.scss';
+
 .CreateTab {
- &__button-wrapper {
-     position: sticky;
-     bottom: 0;
-     left: 0;
-     margin-top: 10px;
-     padding: 10px 40px;
-     transform: translateX(-20px);
-     background-color: rgba(#fff, .85);
- }
+    &__inputs-wrapper{
+        padding-bottom: 50px;
+    }
+
+    &__button-wrapper {
+        //  position: sticky;
+        position: fixed;
+        bottom: 6px;
+        left: 9%;
+        width: 74.8vw;
+        padding: 10px 40px;
+        background-color: rgba(#fff, .85);
+    }
 }

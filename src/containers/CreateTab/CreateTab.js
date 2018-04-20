@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import uuidV4 from 'uuid/v4';
-// import { Node, Tree } from '../../data_structure/dataStructure';
 import { Tree } from '../../data_structure/dataStructure';
 import { connect } from 'react-redux';
+import FlipMove from 'react-flip-move';
 import * as actionTypes from '../../store/actions';
 
 import './CreateTab.css';
@@ -147,9 +147,39 @@ class CreateTab extends Component {
             });  
         }
 
+        const customEnterAnimation = {
+            from: { 
+                opacity: 0,
+                transform: 'translateX(-100%)' 
+            },
+            to: { 
+                opacity: 1,
+                transform: 'translateX(0)' 
+            }
+        };
+
+        const customLeaveAnimation = {
+            from: { 
+                opacity: 1,
+                transform: 'translateX(0)' 
+            },
+            to: { 
+                opacity: 0,
+                transform: 'translateX(100%)' 
+            }
+        };
+
         return (
             <div className="CreateTab">
-                {inputGroups}
+                <div className="CreateTab__inputs-wrapper">
+                    <FlipMove 
+                        duration={350} 
+                        easing="ease-out" 
+                        enterAnimation={customEnterAnimation}
+                        leaveAnimation={customLeaveAnimation}>
+                        {inputGroups}
+                    </FlipMove>
+                </div>
                 <div className="CreateTab__button-wrapper">
                     <InputButton 
                         className="InputButton__add-input" 
