@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import uuidV4 from 'uuid/v4';
-import { Node, Tree } from '../../data_structure/dataStructure';
+// import { Node, Tree } from '../../data_structure/dataStructure';
+import { Tree } from '../../data_structure/dataStructure';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
@@ -35,7 +36,7 @@ class CreateTab extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount() { 
         this.areInputsFilled();
     }
 
@@ -76,7 +77,6 @@ class CreateTab extends Component {
     }
 
     onInputChangeHandler(event, questionId, inputType) {
-        // on any change to input -> change dataStructure
         this.tree.traverseDF(function(node) {
             if(node.id === questionId) {
                 node.data[inputType] = event.target.value;
@@ -90,8 +90,8 @@ class CreateTab extends Component {
             }
         });
 
-        this.areInputsFilled();
         this.updateAndStoreState();
+        setTimeout(this.areInputsFilled.bind(this), 0);
     }
 
     updateAndStoreState() {

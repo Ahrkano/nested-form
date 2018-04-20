@@ -1,25 +1,27 @@
-export class Node {
-    constructor(data) {
-        this.id = data.id;
-        this.data = {
-            question: data.question,
-            type: data.type,
-            parentType: data.parentType,
-            condition: data.condition,
-            conditionValue: data.conditionValue,
-            anchorLevel: data.anchorLevel
-        }
-        this.parent = null;
-        this.children = [];
-    }
-}
-
 export class Tree {
     constructor() {
         this.root = {
             id: 'rootNode',
             children: []
         };
+    }
+
+    returnNodeClass() {
+        return class {
+            constructor(data) {
+                this.id = data.id;
+                this.data = {
+                    question: data.question,
+                    type: data.type,
+                    parentType: data.parentType,
+                    condition: data.condition,
+                    conditionValue: data.conditionValue,
+                    anchorLevel: data.anchorLevel
+                }
+                this.parent = null;
+                this.children = [];
+            }
+        }
     }
 
     traverseBF(callback) {
@@ -49,6 +51,7 @@ export class Tree {
     }
 
     add(data, toParentId, traversal) {
+        const Node = this.returnNodeClass();
         const child = new Node(data);
         let parent = null,
             callback = function(node) {

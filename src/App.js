@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import Aux from './hoc/Auxiliary/Auxiliary';
 
 import Layout from './hoc/Layout/Layout';
 import CreateTab from './containers/CreateTab/CreateTab';
 import PreviewTab from './containers/PreviewTab/PreviewTab';
 import ExportTab from './containers/ExportTab/ExportTab';
-import { connect } from 'react-redux';
 
 import './App.css';
 
@@ -28,8 +29,8 @@ class App extends Component {
         if(!this.props.areInputsFilled) {
             additionalRedirections = (
                 <Aux>
-                    <Redirect from="/Preview" to="/Create" />
-                    <Redirect from="/Export" to="/Create" />
+                    <Redirect from="/Preview" exact to="/Create" />
+                    <Redirect from="/Export" exact to="/Create" />
                 </Aux>
             );
         }
@@ -40,8 +41,8 @@ class App extends Component {
                     <Switch>
                         <Route path="/Create" component={CreateTab} />
                         {routes}
-                        <Redirect from="/" to="/Create" />
                         {additionalRedirections}
+                        <Redirect from="/" to="/Create" />
                     </Switch>
                 </Layout>
             </div>

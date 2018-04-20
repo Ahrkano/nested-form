@@ -10,7 +10,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 
-const persistedState = localStorage.getItem('nestedFormData##') ? JSON.parse(localStorage.getItem('nestedFormData##')) : {};
+const persistedState = localStorage.getItem('nestedFormData##') ? JSON.parse(localStorage.getItem('nestedFormData##')) : { allQuestionsOrder: null, rootQuestionsOrder: null, formObject: null };
 
 const store = createStore(reducer, persistedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

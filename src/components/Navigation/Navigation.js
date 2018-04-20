@@ -60,7 +60,7 @@ class NavigationItems extends Component {
 
 
         return (
-            <Aux>
+            <div className="Navigation__wrapper">
                 <nav className="Navigation">
                     <ul>
                         <li><NavLink to="/Create">Create</NavLink></li>
@@ -80,7 +80,7 @@ class NavigationItems extends Component {
                         info={modalMessage} />
                     )}
                 </Transition>
-            </Aux>
+            </div>
         );
     }
 }
