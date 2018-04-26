@@ -3,7 +3,8 @@ import uuidV4 from 'uuid/v4';
 import { Tree } from '../../data_structure/dataStructure';
 import { connect } from 'react-redux';
 import FlipMove from 'react-flip-move';
-import * as actionTypes from '../../store/actions';
+// import * as actionTypes from '../../store/actions';
+import { stateUpdate, setEmptyInputs } from '../../store/actions';
 import * as localStorageKeys from '../../shared/localStorageKeys';
 
 import './CreateTab.css';
@@ -18,25 +19,6 @@ class CreateTab extends Component {
         super();
         this.tree = null;
     }
-
-
-    // UNSAFE_componentWillMount() {
-    //     this.tree = new Tree();
-        
-    //     if (this.props.allQuestionsOrder && this.props.formObject) {
-    //         this.props.allQuestionsOrder.forEach(questionId => {
-    //             this.tree.add({
-    //                 id: questionId,
-    //                 question: this.props.formObject[questionId].question,
-    //                 type: this.props.formObject[questionId].inputType,
-    //                 parentType: this.props.formObject[questionId].parentType,
-    //                 condition: this.props.formObject[questionId].condition,
-    //                 conditionValue: this.props.formObject[questionId].conditionValue,
-    //                 anchorLevel: this.props.formObject[questionId].level
-    //             }, this.props.formObject[questionId].parentId, this.tree.traverseDF);
-    //         });
-    //     }
-    // }
 
     componentDidMount() { 
         this.tree = new Tree();
@@ -219,17 +201,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onStateUpdate: (allQuestionsOrder, rootQuestionsOrder, formObject) => dispatch({
-            type: actionTypes.UPDATE_STATE, 
-            allQuestionsOrder: allQuestionsOrder,
-            rootQuestionsOrder: rootQuestionsOrder,
-            formObject: formObject
-        }),
-        onEmptyInputs: (inputsStateBoolean, numberOfEmptyInputs) => dispatch({ 
-            type: actionTypes.SET_EMPTY_INPUTS_INFO, 
-            areInputsFilled: inputsStateBoolean,
-            emptyInputs: numberOfEmptyInputs
-        })
+        onStateUpdate: (allQstOrder, rootQstOrder, formObject) => dispatch(stateUpdate(allQstOrder, rootQstOrder, formObject)),
+        onEmptyInputs: (inputsStateBoolean, numberOfEmptyInputs) => dispatch(setEmptyInputs(inputsStateBoolean, numberOfEmptyInputs))
     };
 }
 
