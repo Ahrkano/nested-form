@@ -19,7 +19,26 @@ class CreateTab extends Component {
         this.tree = null;
     }
 
-    componentWillMount() {
+
+    // UNSAFE_componentWillMount() {
+    //     this.tree = new Tree();
+        
+    //     if (this.props.allQuestionsOrder && this.props.formObject) {
+    //         this.props.allQuestionsOrder.forEach(questionId => {
+    //             this.tree.add({
+    //                 id: questionId,
+    //                 question: this.props.formObject[questionId].question,
+    //                 type: this.props.formObject[questionId].inputType,
+    //                 parentType: this.props.formObject[questionId].parentType,
+    //                 condition: this.props.formObject[questionId].condition,
+    //                 conditionValue: this.props.formObject[questionId].conditionValue,
+    //                 anchorLevel: this.props.formObject[questionId].level
+    //             }, this.props.formObject[questionId].parentId, this.tree.traverseDF);
+    //         });
+    //     }
+    // }
+
+    componentDidMount() { 
         this.tree = new Tree();
         
         if (this.props.allQuestionsOrder && this.props.formObject) {
@@ -35,9 +54,7 @@ class CreateTab extends Component {
                 }, this.props.formObject[questionId].parentId, this.tree.traverseDF);
             });
         }
-    }
 
-    componentDidMount() { 
         this.areInputsFilled();
     }
 

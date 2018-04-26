@@ -8,7 +8,8 @@ class ExportTab extends Component {
         super();
         this.JSONexport = null;
     }
-    componentWillMount() {
+
+    UNSAFE_componentWillMount() {
         this.JSONexport = JSON.stringify({
             formObject: this.props.formObject,
             allQuestionsOrder: this.props.allQuestionsOrder,

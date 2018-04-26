@@ -14,7 +14,7 @@ class PreviewTab extends Component {
         this.state = null;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState({ ...this.props.formObject });
         this.rootQuestionsOrder = this.props.rootQuestionsOrder;
     }
