@@ -19,7 +19,7 @@ class PreviewTab extends Component {
         this.rootQuestionsOrder = this.props.rootQuestionsOrder;
     }
 
-    onInputChangeHandler(event, questionId) {
+    onInputChangeHandler = (event, questionId) => {
         const newState = {
             ...this.state,
             [questionId]: {
@@ -31,7 +31,6 @@ class PreviewTab extends Component {
     }
 
     render() {
-        // console.log(this.state);
         let renderForm = null,
             questionsRenderArray = null;
 
@@ -46,7 +45,7 @@ class PreviewTab extends Component {
                         inputType={this.state[questionId].inputType}
                         value={this.state[questionId].answer}
                         level={this.state[questionId].level}
-                        onInputChange={this.onInputChangeHandler.bind(this)}
+                        onInputChange={this.onInputChangeHandler}
                     />
                 );
             });

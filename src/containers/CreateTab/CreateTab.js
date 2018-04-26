@@ -40,7 +40,7 @@ class CreateTab extends Component {
         this.areInputsFilled();
     }
 
-    addInputHandler() {
+    addInputHandler = () => {
         this.tree.add({
             id: `question_${uuidV4().slice(0, 8)}`,
             question: '',
@@ -52,10 +52,10 @@ class CreateTab extends Component {
         }, 'rootNode', this.tree.traverseDF);
 
         this.updateAndStoreState();
-        setTimeout(this.areInputsFilled.bind(this), 0);
+        setTimeout(this.areInputsFilled, 0);
     }
 
-    addSubInputHandler(parentId, parentLevel, parentType) {
+    addSubInputHandler = (parentId, parentLevel, parentType) => {
         this.tree.add({
             id: `question_${uuidV4().slice(0, 8)}`,
             question: '',
@@ -67,16 +67,17 @@ class CreateTab extends Component {
         }, parentId, this.tree.traverseDF);
 
         this.updateAndStoreState();
-        setTimeout(this.areInputsFilled.bind(this), 0);
+        setTimeout(this.areInputsFilled, 0);
     }
 
-    onInputDeleteHandler(childId, parentId) {
+    onInputDeleteHandler = (childId, parentId) => {
         this.tree.remove(childId, parentId, this.tree.traverseDF);
         this.updateAndStoreState();
-        setTimeout(this.areInputsFilled.bind(this), 0);
+        // wait with checking until inputEditBox is removed
+        setTimeout(this.areInputsFilled, 500);
     }
 
-    onInputChangeHandler(event, questionId, inputType) {
+    onInputChangeHandler = (event, questionId, inputType) => {
         this.tree.traverseDF(function(node) {
             if(node.id === questionId) {
                 node.data[inputType] = event.target.value;
@@ -91,7 +92,7 @@ class CreateTab extends Component {
         });
 
         this.updateAndStoreState();
-        setTimeout(this.areInputsFilled.bind(this), 0);
+        setTimeout(this.areInputsFilled, 0);
     }
 
     updateAndStoreState() {
@@ -106,7 +107,7 @@ class CreateTab extends Component {
         this.props.onStateUpdate(allQuestionsOrder, rootQuestionsOrder, formObject);
     }
 
-    areInputsFilled() {
+    areInputsFilled = () => {
         const inputs = document.querySelectorAll('input');
         const emptyInputs = [];
 
@@ -139,9 +140,9 @@ class CreateTab extends Component {
                         conditionValue={this.props.formObject[questionId].conditionValue} 
                         level={this.props.formObject[questionId].level} 
                         parent={this.props.formObject[questionId].parentId} 
-                        onInputChange={this.onInputChangeHandler.bind(this)} 
-                        onSubInputAddition={this.addSubInputHandler.bind(this)}
-                        onInputDeletion={this.onInputDeleteHandler.bind(this)} 
+                        onInputChange={this.onInputChangeHandler} 
+                        onSubInputAddition={this.addSubInputHandler}
+                        onInputDeletion={this.onInputDeleteHandler} 
                     />
                 );
             });  
@@ -150,22 +151,22 @@ class CreateTab extends Component {
         const customEnterAnimation = {
             from: { 
                 opacity: 0,
-                transform: 'translateX(-100%)' 
+                transform: 'translateX(-100%) scale(.7)' 
             },
             to: { 
                 opacity: 1,
-                transform: 'translateX(0)' 
+                transform: 'translateX(0) scale(1)' 
             }
         };
 
         const customLeaveAnimation = {
             from: { 
                 opacity: 1,
-                transform: 'translateX(0)' 
+                transform: 'translateX(0) scale(1)' 
             },
             to: { 
                 opacity: 0,
-                transform: 'translateX(100%)' 
+                transform: 'translateX(100%) scale(.7)' 
             }
         };
 
@@ -183,7 +184,7 @@ class CreateTab extends Component {
                 <div className="CreateTab__button-wrapper">
                     <InputButton 
                         className="InputButton__add-input" 
-                        onButtonClick={this.addInputHandler.bind(this)}>
+                        onButtonClick={this.addInputHandler}>
                         Add Input
                     </InputButton>
                 </div>

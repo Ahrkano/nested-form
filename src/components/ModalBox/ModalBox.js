@@ -19,7 +19,7 @@ const modalBox = (props) => {
     ]
 
     return (
-        <div className={backdropAnimationClassed.join(' ')}>   
+        <div className={backdropAnimationClassed.join(' ')} onClick={props.close}>   
             <div className={dialogAnimationClasses.join(' ')} >
                 <h4 id='modal-label' className="ModalBox__dialog-heading">{props.heading}</h4>
                 <p className="ModalBox__dialog-content">{props.info}</p>

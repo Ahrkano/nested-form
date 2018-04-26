@@ -14,12 +14,12 @@ class NavigationItems extends Component {
         showModal: false
     }
 
-    openModal(event) {
+    openModal = (event) => {
         event.preventDefault();
         this.setState({ showModal: true });
     }
 
-    closeModal() {
+    closeModal = () => {
         this.setState({ showModal: false });
     }
 
@@ -39,8 +39,8 @@ class NavigationItems extends Component {
         } else {
             links = (
                 <Aux>
-                    <li><NavLink to="/Preview" onClick={this.openModal.bind(this)}>Preview</NavLink></li>
-                    <li><NavLink to="/Export" onClick={this.openModal.bind(this)}>Export</NavLink></li>
+                    <li><NavLink to="/Preview" onClick={this.openModal}>Preview</NavLink></li>
+                    <li><NavLink to="/Export" onClick={this.openModal}>Export</NavLink></li>
                 </Aux>
             );
 
@@ -75,7 +75,7 @@ class NavigationItems extends Component {
                     {state => (
                         <ModalBox 
                         state={state}   
-                        close={this.closeModal.bind(this)}
+                        close={this.closeModal}
                         heading={modalHeading}
                         info={modalMessage} />
                     )}
