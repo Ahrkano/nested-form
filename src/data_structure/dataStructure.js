@@ -53,14 +53,13 @@ export class Tree {
     add(data, toParentId, traversal) {
         const Node = this.returnNodeClass();
         const child = new Node(data);
-        let parent = null,
-            callback = function(node) {
-                if (node.id === toParentId) {
-                    parent = node;
-                }
-            };
+        let parent = null;
  
-        this.contains(callback, traversal);
+        this.contains(function(node) {
+            if (node.id === toParentId) {
+                parent = node;
+            }
+        }, traversal);
     
         if (parent) {
             parent.children.push(child);
@@ -74,10 +73,6 @@ export class Tree {
         let parent = null,
             childToRemove = null,
             index;
-     
-        let callback = function(node) {
-            if (node.id === parentId) { parent = node; }
-        };
 
         const findIndex = function(arr, childId) {
             var index;
@@ -89,7 +84,9 @@ export class Tree {
             return index;
         }
      
-        this.contains(callback, traversal);
+        this.contains(function(node) {
+            if (node.id === parentId) { parent = node; }
+        }, traversal);
      
         if (parent) {
             index = findIndex(parent.children, childId);
