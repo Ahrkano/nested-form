@@ -4,6 +4,7 @@ import { Tree } from '../../data_structure/dataStructure';
 import { connect } from 'react-redux';
 import FlipMove from 'react-flip-move';
 import * as actionTypes from '../../store/actions';
+import * as localStorageKeys from '../../shared/localStorageKeys';
 
 import './CreateTab.css';
 
@@ -101,7 +102,7 @@ class CreateTab extends Component {
             rootQuestionsOrder: rootQuestionsOrder,
             formObject: formObject 
         };
-        localStorage.setItem('nestedFormData##', JSON.stringify(storedState));
+        localStorage.setItem(localStorageKeys.MAIN_KEY, JSON.stringify(storedState));
 
         this.props.onStateUpdate(allQuestionsOrder, rootQuestionsOrder, formObject);
     }

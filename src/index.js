@@ -7,10 +7,11 @@ import reducer from './store/reducer';
 
 import './index.css';
 import App from './App';
+import * as localStorageKeys from './shared/localStorageKeys';
 import registerServiceWorker from './registerServiceWorker';
 
 
-const persistedState = localStorage.getItem('nestedFormData##') ? JSON.parse(localStorage.getItem('nestedFormData##')) : { allQuestionsOrder: null, rootQuestionsOrder: null, formObject: null };
+const persistedState = localStorage.getItem(localStorageKeys.MAIN_KEY) ? JSON.parse(localStorage.getItem(localStorageKeys.MAIN_KEY)) : { allQuestionsOrder: null, rootQuestionsOrder: null, formObject: null };
 
 const store = createStore(reducer, persistedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
