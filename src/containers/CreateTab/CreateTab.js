@@ -20,7 +20,6 @@ import {
 } from './Services/services';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
-// import InputEditBox from '../../components/InputEditBox/InputEditBox';
 
 import './CreateTab.css';
     
