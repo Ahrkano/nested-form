@@ -1,3 +1,9 @@
+import { reduxDataStructure } from '../../../helper_functions/reduxDataStructure';
+
+import React from 'react';
+import InputEditBox from '../../../components/InputEditBox/InputEditBox';
+
+
 // populate data structure on component mount
 export const populateTreeStructure = function(allQuestionsOrder, formObject, tree) {
     if (allQuestionsOrder && formObject) {
@@ -44,6 +50,19 @@ export const changeDataValueInTree = function(tree, event, questionId, inputType
     });
 }
 
+// store data in LocalStorage and return arranged Data
+export const storeAndReturnArrangedData = function(tree, storageKey) {
+    const [allQuestionsOrder, rootQuestionsOrder, formObject] = reduxDataStructure(tree);
+    const storedState = {  
+        allQuestionsOrder: allQuestionsOrder,
+        rootQuestionsOrder: rootQuestionsOrder,
+        formObject: formObject 
+    };
+    localStorage.setItem(storageKey, JSON.stringify(storedState));
+
+    return [allQuestionsOrder, rootQuestionsOrder, formObject];
+}
+
 // Check for empty inputs in DOM
 export const returnEmptyInputsQuantity = function(inputs) {
     const emptyInputs = [];
@@ -64,4 +83,30 @@ export const markEmptyInputs = function(inputs) {
             input.style.boxShadow = 'none';
         }
     });
+}
+
+// return inputGroups JSX array
+export const returnInputGroupsJSX = function(allQuestionsOrder, formObject, onInputChangeHandler, addSubInputHandler, onInputDeleteHandler) {
+    if (allQuestionsOrder) {
+        return allQuestionsOrder.map(questionId => {
+            return (
+                <InputEditBox 
+                    key={questionId}
+                    id={questionId} 
+                    value={formObject[questionId].question} 
+                    type={formObject[questionId].inputType} 
+                    parentType={formObject[questionId].parentType}
+                    condition={formObject[questionId].condition}
+                    conditionValue={formObject[questionId].conditionValue} 
+                    level={formObject[questionId].level} 
+                    parent={formObject[questionId].parentId} 
+                    onInputChange={onInputChangeHandler} 
+                    onSubInputAddition={addSubInputHandler}
+                    onInputDeletion={onInputDeleteHandler} 
+                />
+            );
+        });  
+    } else {
+        return null;
+    }
 }
