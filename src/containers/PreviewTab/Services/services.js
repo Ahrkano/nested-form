@@ -9,7 +9,8 @@ export const returnFormJSX = function(state, rootQuestionsOrder, onInputChangeHa
 
         return questionsRenderArray.map(questionId => {
             return (
-                <InputBox key={questionId} 
+                <InputBox
+                    key={questionId}
                     id={questionId}
                     question={state[questionId].question}
                     inputType={state[questionId].inputType}
@@ -22,4 +23,4 @@ export const returnFormJSX = function(state, rootQuestionsOrder, onInputChangeHa
     } else {
         return null;
     }
-}
+};

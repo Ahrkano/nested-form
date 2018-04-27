@@ -1,21 +1,21 @@
 export const customEnterAnimation = {
-    from: { 
+    from: {
         opacity: 0,
-        transform: 'translateX(-100%)' 
+        transform: 'translateX(-100%)'
     },
-    to: { 
+    to: {
         opacity: 1,
-        transform: 'translateX(0)' 
+        transform: 'translateX(0)'
     }
 };
 
 export const customLeaveAnimation = {
-    from: { 
+    from: {
         opacity: 1,
-        transform: 'translateX(0)' 
+        transform: 'translateX(0)'
     },
-    to: { 
+    to: {
         opacity: 0,
-        transform: 'translateX(100%)' 
+        transform: 'translateX(100%)'
     }
 };
