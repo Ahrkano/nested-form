@@ -4,7 +4,7 @@ import uuidV4 from 'uuid/v4';
 import { Tree } from '../../data_structure/dataStructure';
 
 import FlipMove from 'react-flip-move';
-import { stateUpdate, setEmptyInputs } from '../../store/actions';
+import { stateUpdate, setEmptyInputs, addInput } from '../../store/actions';
 import * as localStorageKeys from '../../shared/localStorageKeys';
 
 import {
@@ -27,24 +27,31 @@ import InputButton from '../../components/Buttons/InputButton/InputButton';
 import './CreateTab.css';
 
 class CreateTab extends Component {
-    constructor() {
-        super();
-        this.tree = null;
-    }
+    // constructor() {
+    //     super();
+    //     this.tree = null;
+    // }
 
     componentDidMount() {
-        this.tree = new Tree();
+        // this.tree = new Tree();
         populateTreeStructure(this.props.allQuestionsOrder, this.props.formObject, this.tree);
         setTimeout(this.areInputsFilled, 0);
     }
 
     addInputHandler = () => {
-        addInput(this.tree, `question_${uuidV4().slice(0, 8)}`);
+        // addInput(this.tree, `question_${uuidV4().slice(0, 8)}`);
+        this.props.onInputAddition(`question_${uuidV4().slice(0, 8)}`);
         this.servicesOnDataChange(0);
     };
 
     addSubInputHandler = (parentId, parentLevel, parentType) => {
-        addInput(this.tree, `question_${uuidV4().slice(0, 8)}`, parentId, parentLevel, parentType);
+        // addInput(this.tree, `question_${uuidV4().slice(0, 8)}`, parentId, parentLevel, parentType);
+        this.props.onSubInputAddition(
+            `question_${uuidV4().slice(0, 8)}`,
+            parentId,
+            parentLevel,
+            parentType
+        );
         this.servicesOnDataChange(0);
     };
 
@@ -119,7 +126,10 @@ const mapDispatchToProps = dispatch => {
         onStateUpdate: (allQstOrder, rootQstOrder, formObject) =>
             dispatch(stateUpdate(allQstOrder, rootQstOrder, formObject)),
         onEmptyInputs: (inputsStateBoolean, numberOfEmptyInputs) =>
-            dispatch(setEmptyInputs(inputsStateBoolean, numberOfEmptyInputs))
+            dispatch(setEmptyInputs(inputsStateBoolean, numberOfEmptyInputs)),
+        onInputAddition: questionId => dispatch(addInput(questionId)),
+        onSubInputAddition: (questionId, parentId, parentLevel, parentType) =>
+            dispatch(addSubInput(questionId, parentId, parentLevel, parentType))
     };
 };
 
