@@ -12,12 +12,11 @@ import ExportTab from './containers/ExportTab/ExportTab';
 import './App.css';
 
 class App extends Component {
-
     render() {
         let routes = null,
             additionalRedirections = null;
 
-        if(this.props.areInputsFilled) {
+        if (this.props.areInputsFilled) {
             routes = (
                 <Aux>
                     <Route path="/Preview" component={PreviewTab} />
@@ -26,7 +25,7 @@ class App extends Component {
             );
         }
 
-        if(!this.props.areInputsFilled) {
+        if (!this.props.areInputsFilled) {
             additionalRedirections = (
                 <Aux>
                     <Redirect from="/Preview" exact to="/Create" />
@@ -34,7 +33,7 @@ class App extends Component {
                 </Aux>
             );
         }
-        
+
         return (
             <div className="App">
                 <Layout>
@@ -50,10 +49,10 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => { 
-    return { 
+const mapStateToProps = state => {
+    return {
         areInputsFilled: state.areInputsFilled
-    }; 
+    };
 };
 
 export default withRouter(connect(mapStateToProps, null)(App));
