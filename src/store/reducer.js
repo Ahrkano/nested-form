@@ -1,19 +1,18 @@
 import * as actionTypes from './actions';
 
-const initialState = {  
+const initialState = {
     allQuestionsOrder: null,
     rootQuestionsOrder: null,
-    formObject: null,
+    formObject: null
 };
 
-
 const reducer = (state = initialState, action) => {
-    if (action.type === actionTypes.UPDATE_STATE) { 
+    if (action.type === actionTypes.UPDATE_STATE) {
         return {
             ...state,
-            allQuestionsOrder: [ ...action.allQuestionsOrder ], 
-            rootQuestionsOrder: [ ...action.rootQuestionsOrder ],
-            formObject: { ...action.formObject } 
+            allQuestionsOrder: [...action.allQuestionsOrder],
+            rootQuestionsOrder: [...action.rootQuestionsOrder],
+            formObject: { ...action.formObject }
         };
     }
 
@@ -22,10 +21,10 @@ const reducer = (state = initialState, action) => {
             ...state,
             areInputsFilled: action.areInputsFilled,
             emptyInputs: action.emptyInputs
-        }
+        };
     }
-    
+
     return state;
-}
+};
 
 export default reducer;

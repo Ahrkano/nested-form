@@ -10,11 +10,15 @@ class ExportTab extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        this.JSONexport = JSON.stringify({
-            formObject: this.props.formObject,
-            allQuestionsOrder: this.props.allQuestionsOrder,
-            rootQuestionsOrder: this.props.rootQuestionsOrder
-        }, null, 2);
+        this.JSONexport = JSON.stringify(
+            {
+                formObject: this.props.formObject,
+                allQuestionsOrder: this.props.allQuestionsOrder,
+                rootQuestionsOrder: this.props.rootQuestionsOrder
+            },
+            null,
+            2
+        );
     }
 
     render() {
@@ -26,12 +30,12 @@ class ExportTab extends Component {
     }
 }
 
-const mapStateToProps = state => { 
-    return { 
+const mapStateToProps = state => {
+    return {
         allQuestionsOrder: state.allQuestionsOrder,
         rootQuestionsOrder: state.rootQuestionsOrder,
-        formObject: state.formObject 
-    }; 
+        formObject: state.formObject
+    };
 };
 
 export default connect(mapStateToProps, null)(ExportTab);

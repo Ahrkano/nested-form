@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom'; 
+import { NavLink, withRouter } from 'react-router-dom';
 
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import ModalBox from '../ModalBox/ModalBox';
@@ -7,40 +7,50 @@ import { connect } from 'react-redux';
 import Transition from 'react-transition-group/Transition';
 
 import './Navigation.css';
-    
-class NavigationItems extends Component {
 
+class NavigationItems extends Component {
     state = {
         showModal: false
-    }
+    };
 
-    openModal = (event) => {
+    openModal = event => {
         event.preventDefault();
         this.setState({ showModal: true });
-    }
+    };
 
     closeModal = () => {
         this.setState({ showModal: false });
-    }
+    };
 
     render() {
-
         let links = null,
             modalHeading = null,
             modalMessage = null;
 
-        if(this.props.areInputsFilled) {
+        if (this.props.areInputsFilled) {
             links = (
                 <Aux>
-                    <li><NavLink to="/Preview">Preview</NavLink></li>
-                    <li><NavLink to="/Export">Export</NavLink></li>
+                    <li>
+                        <NavLink to="/Preview">Preview</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/Export">Export</NavLink>
+                    </li>
                 </Aux>
             );
         } else {
             links = (
                 <Aux>
-                    <li><NavLink to="/Preview" onClick={this.openModal}>Preview</NavLink></li>
-                    <li><NavLink to="/Export" onClick={this.openModal}>Export</NavLink></li>
+                    <li>
+                        <NavLink to="/Preview" onClick={this.openModal}>
+                            Preview
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/Export" onClick={this.openModal}>
+                            Export
+                        </NavLink>
+                    </li>
                 </Aux>
             );
 
@@ -54,30 +64,26 @@ class NavigationItems extends Component {
                 modalHeading = `You don't have any inputs yet`;
                 modalMessage = 'Please create and fill in all inputs before continuing';
             }
-            
-            
         }
-
 
         return (
             <div className="Navigation__wrapper">
                 <nav className="Navigation">
                     <ul>
-                        <li><NavLink to="/Create">Create</NavLink></li>
+                        <li>
+                            <NavLink to="/Create">Create</NavLink>
+                        </li>
                         {links}
                     </ul>
                 </nav>
-                <Transition 
-                    in={this.state.showModal}
-                    timeout={500} 
-                    mountOnEnter
-                    unmountOnExit >
+                <Transition in={this.state.showModal} timeout={500} mountOnEnter unmountOnExit>
                     {state => (
-                        <ModalBox 
-                        state={state}   
-                        close={this.closeModal}
-                        heading={modalHeading}
-                        info={modalMessage} />
+                        <ModalBox
+                            state={state}
+                            close={this.closeModal}
+                            heading={modalHeading}
+                            info={modalMessage}
+                        />
                     )}
                 </Transition>
             </div>
@@ -85,11 +91,11 @@ class NavigationItems extends Component {
     }
 }
 
-const mapStateToProps = state => { 
-    return { 
+const mapStateToProps = state => {
+    return {
         areInputsFilled: state.areInputsFilled,
         emptyInputsLeft: state.emptyInputs
-    }; 
+    };
 };
 
 export default withRouter(connect(mapStateToProps, null)(NavigationItems));

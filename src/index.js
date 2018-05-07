@@ -10,13 +10,18 @@ import App from './App';
 import * as localStorageKeys from './shared/localStorageKeys';
 import registerServiceWorker from './registerServiceWorker';
 
+const persistedState = localStorage.getItem(localStorageKeys.MAIN_KEY)
+    ? JSON.parse(localStorage.getItem(localStorageKeys.MAIN_KEY))
+    : { allQuestionsOrder: null, rootQuestionsOrder: null, formObject: null };
 
-const persistedState = localStorage.getItem(localStorageKeys.MAIN_KEY) ? JSON.parse(localStorage.getItem(localStorageKeys.MAIN_KEY)) : { allQuestionsOrder: null, rootQuestionsOrder: null, formObject: null };
+const store = createStore(
+    reducer,
+    persistedState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
-const store = createStore(reducer, persistedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
-store.subscribe(()=>{
-    localStorage.setItem('nestedFormData##', JSON.stringify(store.getState()))
+store.subscribe(() => {
+    localStorage.setItem('nestedFormData##', JSON.stringify(store.getState()));
 });
 
 const app = (
@@ -25,7 +30,7 @@ const app = (
             <App />
         </BrowserRouter>
     </Provider>
-); 
+);
 
 ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();
