@@ -49,6 +49,11 @@ const addSubInputAction = (state, action) => {
     updateState(state);
 };
 
+const deleteInputAction = (state, action) => {
+    tree.remove(action.childId, action.parentId, tree.traverseDF);
+    updateState(state);
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.UPDATE_STATE:
@@ -59,6 +64,8 @@ const reducer = (state = initialState, action) => {
             return addInputAction(state, action);
         case actionTypes.ADD_SUB_INPUT_HANDLER:
             return addSubInputAction(state, action);
+        case actionTypes.DELETE_INPUT:
+            return deleteInputAction(state, action);
         default:
             return state;
     }

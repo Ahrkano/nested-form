@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuidV4 from 'uuid/v4';
-import { Tree } from '../../data_structure/dataStructure';
 
 import FlipMove from 'react-flip-move';
-import { stateUpdate, setEmptyInputs, addInput } from '../../store/actions';
+import {
+    stateUpdate,
+    setEmptyInputs,
+    addInput,
+    addSubInput,
+    deleteInput
+} from '../../store/actions';
 import * as localStorageKeys from '../../shared/localStorageKeys';
 
 import {
@@ -13,10 +18,6 @@ import {
 } from './AnimationsSettings/animationsSettings';
 
 import {
-    populateTreeStructure,
-    addInput,
-    changeDataValueInTree,
-    storeAndReturnArrangedData,
     returnEmptyInputsQuantity,
     markEmptyInputs,
     returnInputGroupsJSX
@@ -27,25 +28,16 @@ import InputButton from '../../components/Buttons/InputButton/InputButton';
 import './CreateTab.css';
 
 class CreateTab extends Component {
-    // constructor() {
-    //     super();
-    //     this.tree = null;
-    // }
-
     componentDidMount() {
-        // this.tree = new Tree();
-        populateTreeStructure(this.props.allQuestionsOrder, this.props.formObject, this.tree);
         setTimeout(this.areInputsFilled, 0);
     }
 
     addInputHandler = () => {
-        // addInput(this.tree, `question_${uuidV4().slice(0, 8)}`);
         this.props.onInputAddition(`question_${uuidV4().slice(0, 8)}`);
         this.servicesOnDataChange(0);
     };
 
     addSubInputHandler = (parentId, parentLevel, parentType) => {
-        // addInput(this.tree, `question_${uuidV4().slice(0, 8)}`, parentId, parentLevel, parentType);
         this.props.onSubInputAddition(
             `question_${uuidV4().slice(0, 8)}`,
             parentId,
@@ -56,7 +48,7 @@ class CreateTab extends Component {
     };
 
     onInputDeleteHandler = (childId, parentId) => {
-        this.tree.remove(childId, parentId, this.tree.traverseDF);
+        onInputDeletion(childId, parentId);
         this.servicesOnDataChange(500); // wait with checking until inputEditBox is removed
     };
 
@@ -129,7 +121,8 @@ const mapDispatchToProps = dispatch => {
             dispatch(setEmptyInputs(inputsStateBoolean, numberOfEmptyInputs)),
         onInputAddition: questionId => dispatch(addInput(questionId)),
         onSubInputAddition: (questionId, parentId, parentLevel, parentType) =>
-            dispatch(addSubInput(questionId, parentId, parentLevel, parentType))
+            dispatch(addSubInput(questionId, parentId, parentLevel, parentType)),
+        onInputDeletion: (childId, parentId) => dispatch(deleteInput(childId, parentId))
     };
 };
 
