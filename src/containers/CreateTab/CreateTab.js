@@ -11,10 +11,7 @@ import {
     dataChange
 } from '../../store/actions';
 
-import {
-    customEnterAnimation,
-    customLeaveAnimation
-} from './AnimationsSettings/animationsSettings';
+import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsSettings';
 
 import {
     returnEmptyInputsQuantity,
@@ -78,8 +75,8 @@ class CreateTab extends Component {
                     <FlipMove
                         duration={350}
                         easing="ease-out"
-                        enterAnimation={customEnterAnimation}
-                        leaveAnimation={customLeaveAnimation}
+                        enterAnimation={enterAnimation}
+                        leaveAnimation={leaveAnimation}
                     >
                         {inputGroups}
                     </FlipMove>

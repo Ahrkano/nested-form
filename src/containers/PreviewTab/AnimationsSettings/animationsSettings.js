@@ -1,4 +1,4 @@
-export const customEnterAnimation = {
+export const enterAnimation = {
     from: {
         opacity: 0,
         transform: 'translateX(-100%)'
@@ -9,7 +9,7 @@ export const customEnterAnimation = {
     }
 };
 
-export const customLeaveAnimation = {
+export const leaveAnimation = {
     from: {
         opacity: 1,
         transform: 'translateX(0)'

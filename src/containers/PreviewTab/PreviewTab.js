@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlipMove from 'react-flip-move';
 
-import {
-    customEnterAnimation,
-    customLeaveAnimation
-} from './AnimationsSettings/animationsSettings';
+import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsSettings';
 import { returnFormJSX } from './Services/services';
 
 import './PreviewTab.css';
@@ -13,13 +10,11 @@ import './PreviewTab.css';
 class PreviewTab extends Component {
     constructor() {
         super();
-        this.rootQuestionsOrder = null;
         this.state = null;
     }
 
     componentDidMount() {
         this.setState({ ...this.props.formObject });
-        this.rootQuestionsOrder = this.props.rootQuestionsOrder;
     }
 
     onInputChangeHandler = (event, questionId) => {
@@ -36,7 +31,7 @@ class PreviewTab extends Component {
     render() {
         let renderForm = returnFormJSX(
             this.state,
-            this.rootQuestionsOrder,
+            this.props.rootQuestionsOrder,
             this.onInputChangeHandler
         );
 
@@ -46,8 +41,8 @@ class PreviewTab extends Component {
                     <FlipMove
                         duration={350}
                         easing="ease-out"
-                        enterAnimation={customEnterAnimation}
-                        leaveAnimation={customLeaveAnimation}
+                        enterAnimation={enterAnimation}
+                        leaveAnimation={leaveAnimation}
                     >
                         {renderForm}
                     </FlipMove>

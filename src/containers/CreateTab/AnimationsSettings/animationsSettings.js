@@ -1,6 +1,6 @@
 // Animation setting for FlipMove library component
 
-export const customEnterAnimation = {
+export const enterAnimation = {
     from: {
         opacity: 0,
         transform: 'translateX(-100%) scale(.7)'
@@ -11,7 +11,7 @@ export const customEnterAnimation = {
     }
 };
 
-export const customLeaveAnimation = {
+export const leaveAnimation = {
     from: {
         opacity: 1,
         transform: 'translateX(0) scale(1)'
