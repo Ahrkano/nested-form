@@ -1,5 +1,5 @@
 import * as actionTypes from './actions';
-import * as localStorageKeys from '../../shared/localStorageKeys';
+import * as localStorageKeys from '../shared/localStorageKeys';
 import { Tree } from '../data_structure/dataStructure';
 
 import {
@@ -16,8 +16,19 @@ const initialState = {
 };
 
 const tree = new Tree();
+let doInitialize = true;
 
-const updateState = state => {
+const setEmptyInputsInfo = (state, action) => {
+    return {
+        ...state,
+        areInputsFilled: action.areInputsFilled,
+        emptyInputs: action.emptyInputs
+    };
+};
+
+const addInputAction = (state, action) => {
+    addInput(tree, action.questionId);
+
     const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
         tree,
         localStorageKeys.MAIN_KEY
@@ -31,33 +42,66 @@ const updateState = state => {
     };
 };
 
-const setEmptyInputsInfo = (state, action) => {
-    return {
-        ...state,
-        areInputsFilled: action.areInputsFilled,
-        emptyInputs: action.emptyInputs
-    };
-};
-
-const addInputAction = (state, action) => {
-    addInput(tree, action.questionId);
-    updateState(state);
-};
-
 const addSubInputAction = (state, action) => {
     addInput(tree, action.questionId, action.parentId, action.parentLevel, action.parentType);
-    updateState(state);
+
+    const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
+        tree,
+        localStorageKeys.MAIN_KEY
+    );
+
+    return {
+        ...state,
+        allQuestionsOrder: [...allQuestionsOrder],
+        rootQuestionsOrder: [...rootQuestionsOrder],
+        formObject: { ...formObject }
+    };
 };
 
 const deleteInputAction = (state, action) => {
     tree.remove(action.childId, action.parentId, tree.traverseDF);
-    updateState(state);
+
+    const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
+        tree,
+        localStorageKeys.MAIN_KEY
+    );
+
+    return {
+        ...state,
+        allQuestionsOrder: [...allQuestionsOrder],
+        rootQuestionsOrder: [...rootQuestionsOrder],
+        formObject: { ...formObject }
+    };
+};
+
+const dataChangeAction = (state, action) => {
+    changeDataValueInTree(tree, action.event, action.questionId, action.inputType);
+
+    const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
+        tree,
+        localStorageKeys.MAIN_KEY
+    );
+
+    return {
+        ...state,
+        allQuestionsOrder: [...allQuestionsOrder],
+        rootQuestionsOrder: [...rootQuestionsOrder],
+        formObject: { ...formObject }
+    };
+};
+
+const checkIfTreeToBePopulated = state => {
+    doInitialize = false;
+    if (state.allQuestionsOrder !== null) {
+        populateTreeStructure(state.allQuestionsOrder, state.formObject, tree);
+    }
 };
 
 const reducer = (state = initialState, action) => {
+    if (doInitialize) {
+        checkIfTreeToBePopulated(state);
+    }
     switch (action.type) {
-        case actionTypes.UPDATE_STATE:
-            return updateState(state, action);
         case actionTypes.SET_EMPTY_INPUTS_INFO:
             return setEmptyInputsInfo(state, action);
         case actionTypes.ADD_INPUT_HANDLER:
@@ -66,6 +110,8 @@ const reducer = (state = initialState, action) => {
             return addSubInputAction(state, action);
         case actionTypes.DELETE_INPUT:
             return deleteInputAction(state, action);
+        case actionTypes.DATA_CHANGE:
+            return dataChangeAction(state, action);
         default:
             return state;
     }

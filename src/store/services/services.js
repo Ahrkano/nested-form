@@ -1,7 +1,5 @@
 import { reduxDataStructure } from '../../helper_functions/reduxDataStructure';
 
-import React from 'react';
-
 // populate data structure on component mount
 export const populateTreeStructure = function(allQuestionsOrder, formObject, tree) {
     if (allQuestionsOrder && formObject) {

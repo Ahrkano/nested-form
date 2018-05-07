@@ -4,13 +4,12 @@ import uuidV4 from 'uuid/v4';
 
 import FlipMove from 'react-flip-move';
 import {
-    stateUpdate,
     setEmptyInputs,
     addInput,
     addSubInput,
-    deleteInput
+    deleteInput,
+    dataChange
 } from '../../store/actions';
-import * as localStorageKeys from '../../shared/localStorageKeys';
 
 import {
     customEnterAnimation,
@@ -34,7 +33,7 @@ class CreateTab extends Component {
 
     addInputHandler = () => {
         this.props.onInputAddition(`question_${uuidV4().slice(0, 8)}`);
-        this.servicesOnDataChange(0);
+        setTimeout(this.areInputsFilled, 0);
     };
 
     addSubInputHandler = (parentId, parentLevel, parentType) => {
@@ -44,17 +43,17 @@ class CreateTab extends Component {
             parentLevel,
             parentType
         );
-        this.servicesOnDataChange(0);
+        setTimeout(this.areInputsFilled, 0);
     };
 
     onInputDeleteHandler = (childId, parentId) => {
-        onInputDeletion(childId, parentId);
-        this.servicesOnDataChange(500); // wait with checking until inputEditBox is removed
+        this.props.onInputDeletion(childId, parentId);
+        setTimeout(this.areInputsFilled, 500); // wait with checking until inputEditBox is removed
     };
 
     onInputChangeHandler = (event, questionId, inputType) => {
-        changeDataValueInTree(this.tree, event, questionId, inputType);
-        this.servicesOnDataChange(0);
+        this.props.onDataChange(event, questionId, inputType);
+        setTimeout(this.areInputsFilled, 0);
     };
 
     areInputsFilled = () => {
@@ -62,14 +61,6 @@ class CreateTab extends Component {
             emptyInputs = returnEmptyInputsQuantity(inputs);
         markEmptyInputs(inputs);
         this.props.onEmptyInputs(emptyInputs === 0 && inputs.length > 0, emptyInputs);
-    };
-
-    servicesOnDataChange = timeout => {
-        // update data and set new data in LocalStorage
-        this.props.onStateUpdate(
-            ...storeAndReturnArrangedData(this.tree, localStorageKeys.MAIN_KEY)
-        );
-        setTimeout(this.areInputsFilled, timeout);
     };
 
     render() {
@@ -115,14 +106,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onStateUpdate: (allQstOrder, rootQstOrder, formObject) =>
-            dispatch(stateUpdate(allQstOrder, rootQstOrder, formObject)),
         onEmptyInputs: (inputsStateBoolean, numberOfEmptyInputs) =>
             dispatch(setEmptyInputs(inputsStateBoolean, numberOfEmptyInputs)),
         onInputAddition: questionId => dispatch(addInput(questionId)),
         onSubInputAddition: (questionId, parentId, parentLevel, parentType) =>
             dispatch(addSubInput(questionId, parentId, parentLevel, parentType)),
-        onInputDeletion: (childId, parentId) => dispatch(deleteInput(childId, parentId))
+        onInputDeletion: (childId, parentId) => dispatch(deleteInput(childId, parentId)),
+        onDataChange: (event, questionId, inputType) =>
+            dispatch(dataChange(event, questionId, inputType))
     };
 };
 
