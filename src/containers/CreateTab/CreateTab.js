@@ -9,7 +9,8 @@ import {
     addSubInput,
     deleteInput,
     dataChange,
-    loadSampleData
+    loadSampleDataAsync,
+    populateTree
 } from '../../store/actions';
 
 import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsSettings';
@@ -18,8 +19,7 @@ import {
     returnEmptyInputsQuantity,
     markEmptyInputs,
     returnInputGroupsJSX,
-    returnWelcomeMessage,
-    getSampleDataFromFirebase
+    returnWelcomeMessage
 } from './services/services';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
@@ -57,8 +57,9 @@ class CreateTab extends Component {
     };
 
     loadSampleData = () => {
-        const [formObject, allQuestionsOrder, rootQuestionsOrder] = getSampleDataFromFirebase();
-        this.props.onSampleDataLoad(formObject, allQuestionsOrder, rootQuestionsOrder);
+        // this.props.onSampleDataLoad();
+        // setTimeout(this.props.populateTreeOnSampleDataLoad, 0);
+        // setTimeout(this.areInputsFilled, 0);
     };
 
     areInputsFilled = () => {
@@ -69,14 +70,16 @@ class CreateTab extends Component {
     };
 
     render() {
-        const inputGroups =
-            returnInputGroupsJSX(
+        let inputGroups = null;
+        if (this.props.allQuestionsOrder) {
+            inputGroups = returnInputGroupsJSX(
                 this.props.allQuestionsOrder,
                 this.props.formObject,
                 this.onInputChangeHandler,
                 this.addSubInputHandler,
                 this.onInputDeleteHandler
-            ) || returnWelcomeMessage(this.loadSampleData);
+            );
+        }
 
         return (
             <div className="CreateTab">
@@ -87,7 +90,7 @@ class CreateTab extends Component {
                         enterAnimation={enterAnimation}
                         leaveAnimation={leaveAnimation}
                     >
-                        {inputGroups}
+                        {inputGroups || returnWelcomeMessage(this.loadSampleData)}
                     </FlipMove>
                 </div>
                 <div className="CreateTab__button-wrapper">
@@ -121,7 +124,8 @@ const mapDispatchToProps = dispatch => {
         onDataChange: (event, questionId, inputType) =>
             dispatch(dataChange(event, questionId, inputType)),
         onSampleDataLoad: (formObject, allQuestionsOrder, rootQuestionsOrder) =>
-            dispatch(loadSampleData(formObject, allQuestionsOrder, rootQuestionsOrder))
+            dispatch(loadSampleDataAsync()),
+        populateTreeOnSampleDataLoad: () => dispatch(populateTree())
     };
 };
 

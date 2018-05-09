@@ -91,12 +91,12 @@ const dataChangeFunction = (state, action) => {
 };
 
 const loadSampleDataFunction = (state, action) => {
-    return {
-        ...state,
-        allQuestionsOrder: [...action.allQuestionsOrder],
-        rootQuestionsOrder: [...action.rootQuestionsOrder],
-        formObject: { ...action.formObject }
-    };
+    // return {
+    //     ...state,
+    //     allQuestionsOrder: [...action.allQuestionsOrder],
+    //     rootQuestionsOrder: [...action.rootQuestionsOrder],
+    //     formObject: { ...action.formObject }
+    // };
 };
 
 const checkIfTreeToBePopulated = state => {
@@ -104,6 +104,12 @@ const checkIfTreeToBePopulated = state => {
     if (state.allQuestionsOrder !== null) {
         populateTreeStructure(state.allQuestionsOrder, state.formObject, tree);
     }
+};
+
+const consoleState = state => {
+    console.log(state.allQuestionsOrder);
+    console.log(state.formObject);
+    console.log(tree);
 };
 
 const reducer = (state = initialState, action) => {
@@ -123,6 +129,8 @@ const reducer = (state = initialState, action) => {
             return dataChangeFunction(state, action);
         case actionTypes.LOAD_SAMPLE_DATA:
             return loadSampleDataFunction(state, action);
+        case actionTypes.UPDATE_TREE:
+            return consoleState(state);
         default:
             return state;
     }

@@ -1,5 +1,5 @@
 {
-  "name": "recipes-app",
+  "name": "nested-form",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,11 +22,14 @@
     "react-scripts": "1.1.4",
     "react-transition-group": "^2.3.1",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "uuid": "^3.2.1"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",

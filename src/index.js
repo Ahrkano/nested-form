@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import reducer from './store/reducer';
 
 import './index.css';
@@ -14,11 +15,9 @@ const persistedState = localStorage.getItem(localStorageKeys.MAIN_KEY)
     ? JSON.parse(localStorage.getItem(localStorageKeys.MAIN_KEY))
     : { allQuestionsOrder: null, rootQuestionsOrder: null, formObject: null };
 
-const store = createStore(
-    reducer,
-    persistedState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer, persistedState, composeEnhancers(applyMiddleware(thunk)));
 
 store.subscribe(() => {
     localStorage.setItem('nestedFormData##', JSON.stringify(store.getState()));
