@@ -1,5 +1,6 @@
 import React from 'react';
 import InputEditBox from '../../../components/InputEditBox/InputEditBox';
+import InputButton from '../../../components/Buttons/InputButton/InputButton';
 
 // Check for empty inputs in DOM
 export const returnEmptyInputsQuantity = function(inputs) {
@@ -33,7 +34,7 @@ export const returnInputGroupsJSX = function(
     addSubInputHandler,
     onInputDeleteHandler
 ) {
-    if (allQuestionsOrder) {
+    if (allQuestionsOrder.length !== 0) {
         return allQuestionsOrder.map(questionId => {
             return (
                 <InputEditBox
@@ -55,4 +56,17 @@ export const returnInputGroupsJSX = function(
     } else {
         return null;
     }
+};
+
+export const returnWelcomeMessage = loadSampleData => {
+    return (
+        <div className="CreateTab__welcome-wrapper">
+            <div className="CreateTab__welcome-message">
+                <h1>hello</h1>
+                <InputButton className="InputButton__add-input" onButtonClick={loadSampleData}>
+                    Load Sample Data
+                </InputButton>
+            </div>
+        </div>
+    );
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuidV4 from 'uuid/v4';
+import axios from '../../axios-orders';
 
 import FlipMove from 'react-flip-move';
 import {
@@ -16,7 +17,8 @@ import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsS
 import {
     returnEmptyInputsQuantity,
     markEmptyInputs,
-    returnInputGroupsJSX
+    returnInputGroupsJSX,
+    returnWelcomeMessage
 } from './services/services';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
@@ -25,6 +27,13 @@ import './CreateTab.css';
 
 class CreateTab extends Component {
     componentDidMount() {
+        // const sampleData = {
+        //     formObject: this.props.formObject,
+        //     allQuestionsOrder: this.props.allQuestionsOrder,
+        //     rootQuestionsOrder: this.props.rootQuestionsOrder
+        // };
+
+        // axios.post('/.json', sampleData);
         setTimeout(this.areInputsFilled, 0);
     }
 
@@ -53,6 +62,17 @@ class CreateTab extends Component {
         setTimeout(this.areInputsFilled, 0);
     };
 
+    loadSampleData = () => {
+        axios
+            .get('/data.json')
+            .then(response => {
+                console.log(response.data[Object.keys(response.data)[0]]);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     areInputsFilled = () => {
         const inputs = document.querySelectorAll('input'),
             emptyInputs = returnEmptyInputsQuantity(inputs);
@@ -61,13 +81,14 @@ class CreateTab extends Component {
     };
 
     render() {
-        const inputGroups = returnInputGroupsJSX(
-            this.props.allQuestionsOrder,
-            this.props.formObject,
-            this.onInputChangeHandler,
-            this.addSubInputHandler,
-            this.onInputDeleteHandler
-        );
+        const inputGroups =
+            returnInputGroupsJSX(
+                this.props.allQuestionsOrder,
+                this.props.formObject,
+                this.onInputChangeHandler,
+                this.addSubInputHandler,
+                this.onInputDeleteHandler
+            ) || returnWelcomeMessage(this.loadSampleData);
 
         return (
             <div className="CreateTab">
@@ -97,6 +118,9 @@ class CreateTab extends Component {
 const mapStateToProps = state => {
     return {
         allQuestionsOrder: state.allQuestionsOrder,
+        //
+        rootQuestionsOrder: state.rootQuestionsOrder,
+        //
         formObject: state.formObject
     };
 };
