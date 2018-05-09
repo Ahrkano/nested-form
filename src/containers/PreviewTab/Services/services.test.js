@@ -1,4 +1,5 @@
 import { returnFormJSX } from './services';
+import { formObjectInstance, rootQuestionOrderInstance } from '../../../shared/sampleValues';
 
 describe('previewTab services tests', () => {
     test("returnFromJSX() should return null if parameters are 'null' or 'undefined'", () => {
@@ -8,5 +9,11 @@ describe('previewTab services tests', () => {
         expect(returnFormJSX(undefined, undefined, undefined)).toEqual(null);
         expect(returnFormJSX(undefined, 'value', undefined)).toEqual(null);
         expect(returnFormJSX('value', undefined, undefined)).toEqual(null);
+    });
+
+    test('returnFromJSX() returns array with proper length', () => {
+        expect(returnFormJSX(formObjectInstance, rootQuestionOrderInstance, () => {}).length).toBe(
+            2
+        );
     });
 });
