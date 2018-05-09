@@ -17,7 +17,7 @@ import {
     returnEmptyInputsQuantity,
     markEmptyInputs,
     returnInputGroupsJSX
-} from './Services/services';
+} from './services/services';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
 

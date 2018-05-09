@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputEditBox snapshot InputEditBox snapshot test 1`] = `
+<div
+  className="InputEditBox"
+  style={
+    Object {
+      "marginLeft": "40px",
+    }
+  }
+>
+  <div
+    className="InputEditBox__content"
+  >
+    <h5
+      className="InputEditBox__question-id"
+    >
+      question_8cbc0838
+    </h5>
+    <div
+      className="InputEditBox__question-value"
+    >
+      <label
+        htmlFor="questionInput"
+      >
+        Question: 
+      </label>
+      <input
+        id="questionInput"
+        onChange={[Function]}
+        value="Write good"
+      />
+    </div>
+    <div
+      className="InputEditBox__question-type"
+    >
+      <label
+        htmlFor="questionType"
+      >
+        Type: 
+      </label>
+      <select
+        id="questionType"
+        onChange={[Function]}
+        value="text"
+      >
+        <option
+          value="yesNo"
+        >
+          Yes / No
+        </option>
+        <option
+          value="text"
+        >
+          Text
+        </option>
+        <option
+          value="number"
+        >
+          Number
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    className="InputEditBox__buttons"
+  >
+    <button
+      className="InputButton__delete"
+      onClick={[Function]}
+    >
+      Delete
+    </button>
+    <button
+      className="InputButton__add-sub-input"
+      onClick={[Function]}
+    >
+      Add Sub-Input
+    </button>
+  </div>
+</div>
+`;
