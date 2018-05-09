@@ -7,6 +7,8 @@ export const DELETE_INPUT = 'DELETE_INPUT';
 export const DATA_CHANGE = 'DATA_CHANGE';
 export const LOAD_SAMPLE_DATA = 'LOAD_SAMPLE_DATA';
 export const UPDATE_TREE = 'UPDATE_TREE';
+export const CONSOLE_TREE = 'CONSOLE_TREE';
+export const CONSOLE_STATE = 'CONSOLE_STATE';
 
 export const setEmptyInputs = (inputsStateBoolean, numberOfEmptyInputs) => {
     return {
@@ -69,9 +71,6 @@ export const loadSampleDataAsync = () => {
                 allQuestionsOrder = response.data[Object.keys(response.data)[0]].allQuestionsOrder;
                 rootQuestionsOrder =
                     response.data[Object.keys(response.data)[0]].rootQuestionsOrder;
-                console.log(formObject);
-                console.log(allQuestionsOrder);
-                console.log(rootQuestionsOrder);
                 dispatch(loadSampleData(formObject, allQuestionsOrder, rootQuestionsOrder));
             })
             .catch(error => {
@@ -83,5 +82,17 @@ export const loadSampleDataAsync = () => {
 export const populateTree = () => {
     return {
         type: UPDATE_TREE
+    };
+};
+
+export const consoleTree = () => {
+    return {
+        type: CONSOLE_TREE
+    };
+};
+
+export const consoleState = () => {
+    return {
+        type: CONSOLE_STATE
     };
 };

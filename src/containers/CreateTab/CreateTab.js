@@ -10,7 +10,9 @@ import {
     deleteInput,
     dataChange,
     loadSampleDataAsync,
-    populateTree
+    populateTree,
+    consoleTree,
+    consoleState
 } from '../../store/actions';
 
 import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsSettings';
@@ -57,9 +59,17 @@ class CreateTab extends Component {
     };
 
     loadSampleData = () => {
-        // this.props.onSampleDataLoad();
-        // setTimeout(this.props.populateTreeOnSampleDataLoad, 0);
-        // setTimeout(this.areInputsFilled, 0);
+        this.props.onSampleDataLoad();
+        setTimeout(this.props.populateTreeOnSampleDataLoad, 500);
+        setTimeout(this.areInputsFilled, 1000);
+    };
+
+    consoleTreeFromReducer = () => {
+        this.props.onTreeConsoleLog();
+    };
+
+    consoleStateFromReducer = () => {
+        this.props.onStateConsoleLog();
     };
 
     areInputsFilled = () => {
@@ -100,6 +110,20 @@ class CreateTab extends Component {
                     >
                         Add Input
                     </InputButton>
+                    {/* to be removed */}
+                    <InputButton
+                        className="InputButton__add-input"
+                        onButtonClick={this.consoleTreeFromReducer}
+                    >
+                        Console log tree
+                    </InputButton>
+                    <InputButton
+                        className="InputButton__add-input"
+                        onButtonClick={this.consoleStateFromReducer}
+                    >
+                        Console log state
+                    </InputButton>
+                    {/* ONLY FOR TESTING */}
                 </div>
             </div>
         );
@@ -125,7 +149,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(dataChange(event, questionId, inputType)),
         onSampleDataLoad: (formObject, allQuestionsOrder, rootQuestionsOrder) =>
             dispatch(loadSampleDataAsync()),
-        populateTreeOnSampleDataLoad: () => dispatch(populateTree())
+        populateTreeOnSampleDataLoad: () => dispatch(populateTree()),
+        onTreeConsoleLog: () => dispatch(consoleTree()),
+        onStateConsoleLog: () => dispatch(consoleState())
     };
 };
 
