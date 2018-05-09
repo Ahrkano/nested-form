@@ -63,8 +63,21 @@ export const returnWelcomeMessage = loadSampleData => {
     return (
         <div className="CreateTab__welcome-wrapper">
             <div className="CreateTab__welcome-message">
-                <h1>hello</h1>
-                <InputButton className="InputButton__add-input" onButtonClick={loadSampleData}>
+                <h1>
+                    <strong>Hi</strong> there!
+                </h1>
+                <p>
+                    This is a sample of <i>Tree Data Structure</i> (you decide how deep you want to
+                    nest your sub-questions). As you switch to <i>Preview Tab</i> only root
+                    questions are rendered. Answering to the question to match condition will cause
+                    conditional question to render on the screen.
+                </p>
+                <p>
+                    App was coded in <strong>React</strong>, <strong>React Router</strong> and
+                    utilizes <strong>Redux</strong> to control data flow. Feel free to input your
+                    own data or fetch sample data from <strong>Firebase</strong>.
+                </p>
+                <InputButton className="InputButton__load-data" onButtonClick={loadSampleData}>
                     Load Sample Data
                 </InputButton>
             </div>

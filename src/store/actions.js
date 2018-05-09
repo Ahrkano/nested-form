@@ -61,6 +61,16 @@ export const loadSampleData = (formObject, allQuestionsOrder, rootQuestionsOrder
     };
 };
 
+const addConditionalQuestionPropertyFix = formObject => {
+    /* Firebase deletes empty properties 
+        this is as temporary fix*/
+    for (let questionId in formObject) {
+        if (!formObject[questionId].conditionalQuestions) {
+            formObject[questionId].conditionalQuestions = {};
+        }
+    }
+};
+
 export const loadSampleDataAsync = () => {
     return dispatch => {
         let formObject, allQuestionsOrder, rootQuestionsOrder;
@@ -68,6 +78,7 @@ export const loadSampleDataAsync = () => {
             .get('/data.json')
             .then(response => {
                 formObject = response.data[Object.keys(response.data)[0]].formObject;
+                addConditionalQuestionPropertyFix(formObject);
                 allQuestionsOrder = response.data[Object.keys(response.data)[0]].allQuestionsOrder;
                 rootQuestionsOrder =
                     response.data[Object.keys(response.data)[0]].rootQuestionsOrder;
@@ -76,12 +87,6 @@ export const loadSampleDataAsync = () => {
             .catch(error => {
                 console.log(error);
             });
-    };
-};
-
-export const populateTree = () => {
-    return {
-        type: UPDATE_TREE
     };
 };
 

@@ -83,6 +83,7 @@ export const returnQuestionInput = props => {
             <label htmlFor="questionInput">Question: </label>
             <DebounceInput
                 debounceTimeout={300}
+                className="InputEditBox__question-input"
                 id="questionInput"
                 value={props.value}
                 onChange={event => props.onInputChange(event, props.id, 'question')}

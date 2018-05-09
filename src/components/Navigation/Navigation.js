@@ -67,7 +67,7 @@ class NavigationItems extends Component {
         }
 
         return (
-            <div className="Navigation__wrapper">
+            <div>
                 <nav className="Navigation">
                     <ul>
                         <li>
@@ -75,6 +75,9 @@ class NavigationItems extends Component {
                         </li>
                         {links}
                     </ul>
+                    <h1 class="Navigation__title">
+                        <strong>Nested Form</strong> Creator
+                    </h1>
                 </nav>
                 <Transition in={this.state.showModal} timeout={500} mountOnEnter unmountOnExit>
                     {state => (
