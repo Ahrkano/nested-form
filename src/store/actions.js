@@ -3,6 +3,7 @@ export const ADD_INPUT_HANDLER = 'ADD_INPUT_HANDLER';
 export const ADD_SUB_INPUT_HANDLER = 'ADD_SUB_INPUT_HANDLER';
 export const DELETE_INPUT = 'DELETE_INPUT';
 export const DATA_CHANGE = 'DATA_CHANGE';
+export const LOAD_SAMPLE_DATA = 'LOAD_SAMPLE_DATA';
 
 export const setEmptyInputs = (inputsStateBoolean, numberOfEmptyInputs) => {
     return {
@@ -43,5 +44,14 @@ export const dataChange = (event, questionId, inputType) => {
         event: event,
         questionId: questionId,
         inputType: inputType
+    };
+};
+
+export const loadSampleData = (formObject, allQuestionsOrder, rootQuestionsOrder) => {
+    return {
+        type: LOAD_SAMPLE_DATA,
+        formObject: formObject,
+        allQuestionsOrder: allQuestionsOrder,
+        rootQuestionsOrder: rootQuestionsOrder
     };
 };

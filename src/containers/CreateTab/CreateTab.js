@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuidV4 from 'uuid/v4';
-import axios from '../../axios-orders';
 
 import FlipMove from 'react-flip-move';
 import {
@@ -9,7 +8,8 @@ import {
     addInput,
     addSubInput,
     deleteInput,
-    dataChange
+    dataChange,
+    loadSampleData
 } from '../../store/actions';
 
 import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsSettings';
@@ -18,7 +18,8 @@ import {
     returnEmptyInputsQuantity,
     markEmptyInputs,
     returnInputGroupsJSX,
-    returnWelcomeMessage
+    returnWelcomeMessage,
+    getSampleDataFromFirebase
 } from './services/services';
 
 import InputButton from '../../components/Buttons/InputButton/InputButton';
@@ -27,13 +28,6 @@ import './CreateTab.css';
 
 class CreateTab extends Component {
     componentDidMount() {
-        // const sampleData = {
-        //     formObject: this.props.formObject,
-        //     allQuestionsOrder: this.props.allQuestionsOrder,
-        //     rootQuestionsOrder: this.props.rootQuestionsOrder
-        // };
-
-        // axios.post('/.json', sampleData);
         setTimeout(this.areInputsFilled, 0);
     }
 
@@ -63,14 +57,8 @@ class CreateTab extends Component {
     };
 
     loadSampleData = () => {
-        axios
-            .get('/data.json')
-            .then(response => {
-                console.log(response.data[Object.keys(response.data)[0]]);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        const [formObject, allQuestionsOrder, rootQuestionsOrder] = getSampleDataFromFirebase();
+        this.props.onSampleDataLoad(formObject, allQuestionsOrder, rootQuestionsOrder);
     };
 
     areInputsFilled = () => {
@@ -118,9 +106,6 @@ class CreateTab extends Component {
 const mapStateToProps = state => {
     return {
         allQuestionsOrder: state.allQuestionsOrder,
-        //
-        rootQuestionsOrder: state.rootQuestionsOrder,
-        //
         formObject: state.formObject
     };
 };
@@ -134,7 +119,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(addSubInput(questionId, parentId, parentLevel, parentType)),
         onInputDeletion: (childId, parentId) => dispatch(deleteInput(childId, parentId)),
         onDataChange: (event, questionId, inputType) =>
-            dispatch(dataChange(event, questionId, inputType))
+            dispatch(dataChange(event, questionId, inputType)),
+        onSampleDataLoad: (formObject, allQuestionsOrder, rootQuestionsOrder) =>
+            dispatch(loadSampleData(formObject, allQuestionsOrder, rootQuestionsOrder))
     };
 };
 

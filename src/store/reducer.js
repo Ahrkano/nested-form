@@ -26,7 +26,7 @@ const setEmptyInputsInfo = (state, action) => {
     };
 };
 
-const addInputAction = (state, action) => {
+const addInputFunction = (state, action) => {
     addInput(tree, action.questionId);
 
     const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
@@ -42,7 +42,7 @@ const addInputAction = (state, action) => {
     };
 };
 
-const addSubInputAction = (state, action) => {
+const addSubInputFunction = (state, action) => {
     addInput(tree, action.questionId, action.parentId, action.parentLevel, action.parentType);
 
     const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
@@ -58,7 +58,7 @@ const addSubInputAction = (state, action) => {
     };
 };
 
-const deleteInputAction = (state, action) => {
+const deleteInputFunction = (state, action) => {
     tree.remove(action.childId, action.parentId, tree.traverseDF);
 
     const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
@@ -74,7 +74,7 @@ const deleteInputAction = (state, action) => {
     };
 };
 
-const dataChangeAction = (state, action) => {
+const dataChangeFunction = (state, action) => {
     changeDataValueInTree(tree, action.event, action.questionId, action.inputType);
 
     const [allQuestionsOrder, rootQuestionsOrder, formObject] = storeAndReturnArrangedData(
@@ -87,6 +87,15 @@ const dataChangeAction = (state, action) => {
         allQuestionsOrder: [...allQuestionsOrder],
         rootQuestionsOrder: [...rootQuestionsOrder],
         formObject: { ...formObject }
+    };
+};
+
+const loadSampleDataFunction = (state, action) => {
+    return {
+        ...state,
+        allQuestionsOrder: [...action.allQuestionsOrder],
+        rootQuestionsOrder: [...action.rootQuestionsOrder],
+        formObject: { ...action.formObject }
     };
 };
 
@@ -105,13 +114,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_EMPTY_INPUTS_INFO:
             return setEmptyInputsInfo(state, action);
         case actionTypes.ADD_INPUT_HANDLER:
-            return addInputAction(state, action);
+            return addInputFunction(state, action);
         case actionTypes.ADD_SUB_INPUT_HANDLER:
-            return addSubInputAction(state, action);
+            return addSubInputFunction(state, action);
         case actionTypes.DELETE_INPUT:
-            return deleteInputAction(state, action);
+            return deleteInputFunction(state, action);
         case actionTypes.DATA_CHANGE:
-            return dataChangeAction(state, action);
+            return dataChangeFunction(state, action);
+        case actionTypes.LOAD_SAMPLE_DATA:
+            return loadSampleDataFunction(state, action);
         default:
             return state;
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from '../../../axios-orders';
 import InputEditBox from '../../../components/InputEditBox/InputEditBox';
 import InputButton from '../../../components/Buttons/InputButton/InputButton';
 
@@ -69,4 +70,20 @@ export const returnWelcomeMessage = loadSampleData => {
             </div>
         </div>
     );
+};
+
+export const getSampleDataFromFirebase = () => {
+    let formObject, allQuestionsOrder, rootQuestionsOrder;
+    axios
+        .get('/data.json')
+        .then(response => {
+            formObject = response.data[Object.keys(response.data)[0]].formObject;
+            allQuestionsOrder = response.data[Object.keys(response.data)[0]].allQuestionsOrder;
+            rootQuestionsOrder = response.data[Object.keys(response.data)[0]].rootQuestionsOrder;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    return [formObject, allQuestionsOrder, rootQuestionsOrder];
 };
