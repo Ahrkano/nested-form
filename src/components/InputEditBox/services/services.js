@@ -1,4 +1,5 @@
 import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import InputButton from '../../Buttons/InputButton/InputButton';
 
@@ -15,7 +16,8 @@ export const returnCondition = props => {
                         >
                             <option value="equals">Equals</option>
                         </select>
-                        <input
+                        <DebounceInput
+                            debounceTimeout={300}
                             type="text"
                             id="questionInput"
                             value={props.conditionValue}
@@ -59,7 +61,8 @@ export const returnCondition = props => {
                             <option value="greater">Greater than</option>
                             <option value="less">Less than</option>
                         </select>
-                        <input
+                        <DebounceInput
+                            debounceTimeout={300}
                             className="InputEditBox__number-input"
                             type="number"
                             id="questionInput"
@@ -78,7 +81,8 @@ export const returnQuestionInput = props => {
     return (
         <div className="InputEditBox__question-value">
             <label htmlFor="questionInput">Question: </label>
-            <input
+            <DebounceInput
+                debounceTimeout={300}
                 id="questionInput"
                 value={props.value}
                 onChange={event => props.onInputChange(event, props.id, 'question')}
