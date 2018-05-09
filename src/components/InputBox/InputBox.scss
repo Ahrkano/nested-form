@@ -6,8 +6,9 @@
     align-items: flex-start;
     justify-content: center;
     background-color: $color-box-background;
-    border: 2px solid $color-primary;
-    border-radius: 10px;
+    border: 1px solid $color-secondary;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(#000, 0.1);
     width: 300px;
     height: 100px;
     margin: 20px;
@@ -51,18 +52,18 @@
         // border: 1px dashed $color-primary;
         border-radius: 5px;
 
-        background-color: rgba($color-primary, .2);
+        background-color: rgba($color-primary, 0.2);
 
         &--yes {
-            background-color: rgba($color-success, .2);
+            background-color: rgba($color-success, 0.2);
         }
 
         &--no {
-            background-color: rgba($color-warning, .2);
+            background-color: rgba($color-warning, 0.2);
         }
 
         & input,
-        & label { 
+        & label {
             cursor: pointer;
         }
     }
