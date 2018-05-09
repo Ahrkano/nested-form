@@ -9,9 +9,7 @@ import {
     addSubInput,
     deleteInput,
     dataChange,
-    loadSampleDataAsync,
-    consoleTree,
-    consoleState
+    loadSampleDataAsync
 } from '../../store/actions';
 
 import { enterAnimation, leaveAnimation } from './AnimationsSettings/animationsSettings';
@@ -89,7 +87,8 @@ class CreateTab extends Component {
                         enterAnimation={enterAnimation}
                         leaveAnimation={leaveAnimation}
                     >
-                        {inputGroups || returnWelcomeMessage(this.loadSampleData)}
+                        {inputGroups ||
+                            returnWelcomeMessage(this.loadSampleData, this.props.dataFetching)}
                     </FlipMove>
                 </div>
                 <div className="CreateTab__button-wrapper">
@@ -108,7 +107,8 @@ class CreateTab extends Component {
 const mapStateToProps = state => {
     return {
         allQuestionsOrder: state.allQuestionsOrder,
-        formObject: state.formObject
+        formObject: state.formObject,
+        dataFetching: state.dataFetching
     };
 };
 
@@ -123,9 +123,7 @@ const mapDispatchToProps = dispatch => {
         onDataChange: (event, questionId, inputType) =>
             dispatch(dataChange(event, questionId, inputType)),
         onSampleDataLoad: (formObject, allQuestionsOrder, rootQuestionsOrder) =>
-            dispatch(loadSampleDataAsync()),
-        onTreeConsoleLog: () => dispatch(consoleTree()),
-        onStateConsoleLog: () => dispatch(consoleState())
+            dispatch(loadSampleDataAsync())
     };
 };
 

@@ -7,8 +7,7 @@ export const DELETE_INPUT = 'DELETE_INPUT';
 export const DATA_CHANGE = 'DATA_CHANGE';
 export const LOAD_SAMPLE_DATA = 'LOAD_SAMPLE_DATA';
 export const UPDATE_TREE = 'UPDATE_TREE';
-export const CONSOLE_TREE = 'CONSOLE_TREE';
-export const CONSOLE_STATE = 'CONSOLE_STATE';
+export const DATA_FETCHING = 'DATA_FETCHING';
 
 export const setEmptyInputs = (inputsStateBoolean, numberOfEmptyInputs) => {
     return {
@@ -61,6 +60,12 @@ export const loadSampleData = (formObject, allQuestionsOrder, rootQuestionsOrder
     };
 };
 
+export const dataFetching = () => {
+    return {
+        type: DATA_FETCHING
+    };
+};
+
 const addConditionalQuestionPropertyFix = formObject => {
     /* Firebase deletes empty properties 
         this is as temporary fix*/
@@ -73,6 +78,7 @@ const addConditionalQuestionPropertyFix = formObject => {
 
 export const loadSampleDataAsync = () => {
     return dispatch => {
+        dispatch(dataFetching());
         let formObject, allQuestionsOrder, rootQuestionsOrder;
         axios
             .get('/data.json')
@@ -87,17 +93,5 @@ export const loadSampleDataAsync = () => {
             .catch(error => {
                 console.log(error);
             });
-    };
-};
-
-export const consoleTree = () => {
-    return {
-        type: CONSOLE_TREE
-    };
-};
-
-export const consoleState = () => {
-    return {
-        type: CONSOLE_STATE
     };
 };

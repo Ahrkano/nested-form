@@ -12,7 +12,8 @@ import {
 const initialState = {
     allQuestionsOrder: null,
     rootQuestionsOrder: null,
-    formObject: null
+    formObject: null,
+    dataFetching: false
 };
 
 const tree = new Tree();
@@ -98,7 +99,15 @@ const loadSampleDataFunction = (state, action) => {
         rootQuestionsOrder: [...action.rootQuestionsOrder],
         formObject: { ...action.formObject },
         areInputsFilled: true,
-        emptyInputs: 0
+        emptyInputs: 0,
+        dataFetching: false
+    };
+};
+
+const dataFetchingFunction = state => {
+    return {
+        ...state,
+        dataFetching: true
     };
 };
 
@@ -126,6 +135,8 @@ const reducer = (state = initialState, action) => {
             return dataChangeFunction(state, action);
         case actionTypes.LOAD_SAMPLE_DATA:
             return loadSampleDataFunction(state, action);
+        case actionTypes.DATA_FETCHING:
+            return dataFetchingFunction(state);
         default:
             return state;
     }

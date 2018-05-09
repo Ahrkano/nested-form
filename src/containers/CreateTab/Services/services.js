@@ -59,13 +59,13 @@ export const returnInputGroupsJSX = function(
     }
 };
 
-export const returnWelcomeMessage = loadSampleData => {
-    return (
-        <div className="CreateTab__welcome-wrapper">
-            <div className="CreateTab__welcome-message">
-                <h1>
-                    <strong>Hi</strong> there!
-                </h1>
+export const returnWelcomeMessage = (loadSampleData, dataFetching) => {
+    let content = null;
+    if (dataFetching) {
+        content = <div className="loader">Loading...</div>;
+    } else {
+        content = (
+            <div>
                 <p>
                     This is a sample of <i>Tree Data Structure</i> (you decide how deep you want to
                     nest your sub-questions). As you switch to <i>Preview Tab</i> only root
@@ -77,6 +77,16 @@ export const returnWelcomeMessage = loadSampleData => {
                     utilizes <strong>Redux</strong> to control data flow. Feel free to input your
                     own data or fetch sample data from <strong>Firebase</strong>.
                 </p>
+            </div>
+        );
+    }
+    return (
+        <div className="CreateTab__welcome-wrapper">
+            <div className="CreateTab__welcome-message">
+                <h1>
+                    <strong>Hi</strong> there!
+                </h1>
+                <div className="CreateTab__welcome-message-content">{content}</div>
                 <InputButton className="InputButton__load-data" onButtonClick={loadSampleData}>
                     Load Sample Data
                 </InputButton>
