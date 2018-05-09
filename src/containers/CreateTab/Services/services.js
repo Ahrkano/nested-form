@@ -73,7 +73,7 @@ export const returnWelcomeMessage = (loadSampleData, dataFetching) => {
                     conditional question to render on the screen.
                 </p>
                 <p>
-                    App was coded in <strong>React</strong>, <strong>React Router</strong> and
+                    App was coded using <strong>React</strong>, <strong>React Router</strong> and
                     utilizes <strong>Redux</strong> to control data flow. Feel free to input your
                     own data or fetch sample data from <strong>Firebase</strong>.
                 </p>
