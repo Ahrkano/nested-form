@@ -35,7 +35,6 @@ export const returnInputGroupsJSX = function(
     onInputDeleteHandler
 ) {
     if (allQuestionsOrder.length !== 0) {
-        // if (allQuestionsOrder) {
         return allQuestionsOrder.map(questionId => {
             return (
                 <InputEditBox

@@ -79,16 +79,18 @@ const addConditionalQuestionPropertyFix = formObject => {
 export const loadSampleDataAsync = () => {
     return dispatch => {
         dispatch(dataFetching());
-        let formObject, allQuestionsOrder, rootQuestionsOrder;
         axios
             .get('/data.json')
             .then(response => {
-                formObject = response.data[Object.keys(response.data)[0]].formObject;
+                const formObject = response.data[Object.keys(response.data)[0]].formObject;
                 addConditionalQuestionPropertyFix(formObject);
-                allQuestionsOrder = response.data[Object.keys(response.data)[0]].allQuestionsOrder;
-                rootQuestionsOrder =
-                    response.data[Object.keys(response.data)[0]].rootQuestionsOrder;
-                dispatch(loadSampleData(formObject, allQuestionsOrder, rootQuestionsOrder));
+                dispatch(
+                    loadSampleData(
+                        formObject,
+                        response.data[Object.keys(response.data)[0]].allQuestionsOrder,
+                        response.data[Object.keys(response.data)[0]].rootQuestionsOrder
+                    )
+                );
             })
             .catch(error => {
                 console.log(error);
